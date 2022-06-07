@@ -3,7 +3,7 @@ let modInfo = {
 	id: "TTOF_AjchenPath",
 	author: "TMT community",
 	pointsName: "points",
-	modFiles: ["layers.js", "tree.js"],
+	modFiles: ["layers.js", "tree.js",'changelog.js'],
 
 	discordName: "",
 	discordLink: "",
@@ -13,15 +13,9 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
+	num: "0.02",
 	name: "IDK WHAT TO PUT AT HERE",
 }
-
-let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.
-		- I Guess.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -36,18 +30,6 @@ function getStartPoints(){
 // Determines if it should show points/sec
 function canGenPoints(){
 	return true
-}
-
-// Calculate points/sec!
-function getPointGen() {
-	if(!canGenPoints())
-		return new Decimal(0)
-
-	let base = new Decimal(1)
-	let gain = new Decimal(1)
-	if (hasUpgrade('p',11)) gain = gain.times(2)
-	if (hasUpgrade('p',12)) gain = gain.times(upgradeEffect('p',12))
-	return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
