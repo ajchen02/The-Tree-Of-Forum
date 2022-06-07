@@ -106,7 +106,7 @@ addLayer("f", {
         points: new Decimal(0),             
     }},
 
-    color: "#8B8B7A",                       
+    color: "#ADFF2F",                       
     resource: "fruits",            
     row: 1,                                 
     branches:['p'],
