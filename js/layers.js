@@ -56,10 +56,11 @@ addLayer("p", {
             description: "Boost your point gain based on your prestige point.",
             cost: new Decimal(3),
             effect() {
-                return player[this.layer].points.add(1).log10().add(1).pow(2)//.min(5)
+                //return player[this.layer].points.add(1).pow(2).min(5)
+                return hasUpgrade(this.layer,this.id)?player[this.layer].points.add(1).pow(2).min(5):player[this.layer].points.add(1).pow(2)
             },
             //tooltip:"(And a +1 output as Fawwaz Arkan suggest)",
-            tooltip(){return (upgradeEffect(this.layer, this.id).gte(5)?'Hardcapped at 5x<br>':'')+"Formula: (Log10(x)+1)^2"},
+            tooltip(){return ((upgradeEffect(this.layer, this.id).gte(5)&&hasUpgrade(this.layer,this.id))?'Sorry I forgot<br>Hardcapped at 5x<br>':'')+"Formula: x^2"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         13: {
@@ -84,6 +85,7 @@ addLayer("p", {
             cost: new Decimal(10),
             effect() {
                 return player[this.layer].last.max(1).log10().add(1)
+                //Alternative return player[this.layer].last.max(1).root(2)
             },
             tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
