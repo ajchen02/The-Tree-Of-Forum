@@ -5,7 +5,6 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let base = new Decimal(1)
-	let gain = new Decimal(1)
     let pGain = new Decimal(1)
 	if (hasUpgrade('p',11)) pGain = pGain.times(2)
 	if (hasUpgrade('p',12)) pGain = pGain.times(upgradeEffect('p',12))
@@ -38,13 +37,14 @@ addLayer("p", {
         return new Decimal(1)
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
-    last: new Decimal(0),
     hotkeys: [
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     onPrestige(gain) {
         //console.log(gain)
-        player[this.layer].last=gain
+        if (hasUpgrade('cyberpunk',2077)) {player[this.layer].last.lte(gain)?player[this.layer].last=gain:null}
+        else {player[this.layer].last=gain}
+        
     },
     upgrades:{
         11: {
@@ -57,10 +57,10 @@ addLayer("p", {
             description: "Boost your point gain based on your prestige point.",
             cost: new Decimal(3),
             effect() {
-                return player[this.layer].points.add(1).log10().add(1).pow(2).min(5)
+                return player[this.layer].points.add(1).log10().add(1).pow(2)//.min(5)
             },
             //tooltip:"(And a +1 output as Fawwaz Arkan suggest)",
-            tooltip(){return (upgradeEffect(this.layer, this.id).gte(5)?'Hardcapped at 5x<br>':'')+"Formula: (Log10(x+1)+1)^2"},
+            tooltip(){return (upgradeEffect(this.layer, this.id).gte(5)?'Hardcapped at 5x<br>':'')+"Formula: (Log10(x)+1)^2"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         13: {
@@ -74,7 +74,7 @@ addLayer("p", {
             //    player.points.sub(100)
             //},
             effect() {
-                return player.points.max(1).log10().add(1)
+                return player.points.add(1).log10().add(1)
             },
             tooltip:"Formula: Log10(x)+1",
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
@@ -86,24 +86,56 @@ addLayer("p", {
             effect() {
                 return player[this.layer].last.max(1).log10().add(1)
             },
-            //tooltip: () =>"Last: "+format(player[this.layer].last)+"<br>Formula: Log10(x)+1",
-            tooltip(){return "Last: "+format(player[this.layer].last,precision = 0)+"<br>Formula: Log10(x)+1"},
+            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
     },
-    //tabFormat: [
-    //"main-display",
-    //    "prestige-button",
-    //    "blank",
-    //    ["display-text",
-    //        function() { return 'I have ' + format(player.points) + ' pointy points!' },
-    //        { "color": "red", "font-size": "32px", "font-family": "Comic Sans MS" }],
-    //    "blank",
-    //    ["toggle", ["c", "beep"]],
-    //    "milestones",
-    //    "blank",
-    //    "blank",
-    //    "upgrades"
-    //],
+    tabFormat: [
+    "main-display",
+        "prestige-button",
+        //'blank',
+        'resource-display',
+        'upgrades',
+    ],
     layerShown(){return true}
+})
+addLayer("f", {
+    startData() { return {                  
+        unlocked: false,                    
+        points: new Decimal(0),             
+    }},
+
+    color: "#8B8B7A",                       
+    resource: "fruits",            
+    row: 1,                                 
+    branches:['p'],
+    baseResource: "prestige point",         
+    baseAmount() { return player.p.points },
+
+    requires: new Decimal(20),              
+                                            
+    type: "static",                         
+    exponent: 2,                          
+    canBuyMax(){return true},
+    gainMult() {                            
+        return new Decimal(1)               
+    },
+    gainExp() {                             
+        return new Decimal(1)
+    },
+
+    layerShown() { return true },          
+
+    upgrades: {
+
+    },
+    tabFormat: [
+            "main-display",
+            ["display-text",
+            function() { return 'This layer currently does nothing so I just disabled prestige.' },],
+            //"prestige-button",
+            //'blank',
+            'resource-display',
+            'upgrades',
+        ],
 })
