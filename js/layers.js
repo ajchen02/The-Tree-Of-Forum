@@ -42,9 +42,8 @@ addLayer("p", {
     ],
     onPrestige(gain) {
         //console.log(gain)
-        if (hasUpgrade('cyberpunk',2077)) {player[this.layer].last.gte(gain)?player[this.layer].last=gain:null}
+        if (/*hasUpgrade('cyberpunk',2077)*/ false) {player[this.layer].last.gte(gain)?player[this.layer].last=gain:null}
         else {player[this.layer].last=gain}
-        
     },
     upgrades:{
         11: {
