@@ -1,5 +1,9 @@
 
 let changelog = `<h1>Changelog:</h1><br>
+<br><h3>v0.04</h3><br>
+    - Added a new effect to layer f.<br>
+    - Now layer f can does something.<br>
+    - Added A buyable that spawns upgrades.<br>
 <br><h3>v0.03.2</h3><br>
     - More small banlanced.<br>
     - Fix an bug at prestige reset.<br>

@@ -2726,17 +2726,36 @@ for (var i = 0; i < 10; ++i)
     return Decimal;
   }();
 
-	Decimal.dZero = FC_NN(0, 0, 0);
-	Decimal.dOne = FC_NN(1, 0, 1);
+	Decimal.dZero = FC_NN(0, 0, 0);             Decimal.d0 = FC_NN(0,0,0);
+	Decimal.dOne = FC_NN(1, 0, 1);              Decimal.d1 = FC_NN(1,0,1);
+	Decimal.dTwo = FC_NN(1, 0, 2);              Decimal.d2 = FC_NN(1,0,2);
+  Decimal.dThree = FC_NN(1, 0, 3);            Decimal.d3 = FC_NN(1,0,3);
+  Decimal.dFour = FC_NN(1, 0, 4);             Decimal.d4 = FC_NN(1,0,4);
+  Decimal.dFive = FC_NN(1, 0, 5);             Decimal.d5 = FC_NN(1,0,5);
+  Decimal.dSix = FC_NN(1, 0, 6);              Decimal.d6 = FC_NN(1,0,6);
+  Decimal.dSeven = FC_NN(1, 0, 7);            Decimal.d7 = FC_NN(1,0,7);
+  Decimal.dEight = FC_NN(1, 0, 8);            Decimal.d8 = FC_NN(1,0,8);
+  Decimal.dNine = FC_NN(1, 0, 9);             Decimal.d9 = FC_NN(1,0,9);
+	Decimal.dTen = FC_NN(1, 0, 10);             Decimal.d10 = FC_NN(1,0,10);
+  Decimal.dTwenty = FC_NN(1, 0, 20);          Decimal.d20 = FC_NN(1,0,20);
+  Decimal.dThirty = FC_NN(1, 0, 30);          Decimal.d30 = FC_NN(1,0,30);
+  Decimal.dForty = FC_NN(1, 0, 40);           Decimal.d40 = FC_NN(1,0,40);
+  Decimal.dFifty = FC_NN(1, 0, 50);           Decimal.d50 = FC_NN(1,0,50);
+  Decimal.dSixty = FC_NN(1, 0, 60);           Decimal.d60 = FC_NN(1,0,60);
+  Decimal.dSeventy = FC_NN(1, 0, 70);         Decimal.d70 = FC_NN(1,0,70);
+  Decimal.dEighty = FC_NN(1, 0, 80);          Decimal.d80 = FC_NN(1,0,80);
+  Decimal.dNinety = FC_NN(1, 0, 90);          Decimal.d90 = FC_NN(1,0,90);
+  Decimal.dHundred = FC_NN(1, 0, 100);        Decimal.d100 = FC_NN(1,0,100);
+
+
 	Decimal.dNegOne = FC_NN(-1, 0, 1);
-	Decimal.dTwo = FC_NN(1, 0, 2);
-	Decimal.dTen = FC_NN(1, 0, 10);
 	Decimal.dNaN = FC_NN(Number.NaN, Number.NaN, Number.NaN);
 	Decimal.dInf = FC_NN(1, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY);
 	Decimal.dNegInf = FC_NN(-1, Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY);
   Decimal.dNumberMax = FC(1, 0, Number.MAX_VALUE);
   Decimal.dNumberMin = FC(1, 0, Number.MIN_VALUE);
   
+
   return Decimal;
 
 }));
