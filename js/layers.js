@@ -187,8 +187,8 @@ addLayer("m", {
             name: "The Second Achievement.",
             done() { return player[this.layer].points.gte(2) },
             goalTooltip:'Just Get 2 Milestones, cmon that is easy.',
-            doneTooltip(){return 'Boost the first achievement by 1.1x PER MILESTONES.<br>'+'Currently: '+format(tmp.m.achievements[12].effect)+'x.'},
-            effect() {if (hasAchievement('m',12)) return player[this.layer].points.max(1).pow(1.1); else return Decimal.d1},
+            doneTooltip(){return 'Boost the first achievement by 1.5x PER MILESTONES.<br>'+'Currently: '+format(tmp.m.achievements[12].effect)+'x.'},
+            effect() {if (hasAchievement('m',12)) return new Decimal(1.5).pow(player[this.layer].points.max(1)); else return Decimal.d1},
         },
         13: {
             unlocked(){return hasAchievement('m',12)},
