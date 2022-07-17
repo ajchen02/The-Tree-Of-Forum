@@ -1,9 +1,9 @@
 
 let changelog = `<h1>Changelog:</h1><br>
 <br><h3>0.101</h3><br>
-    - Fix an bug.
+    - Fix an bug.<br>
 <br><h2>0.1</h2><br>
-    - Added SOOO MUCH THINGS I CAN'T EVEN LIST THEM ALL<br>
+    - Added SOOO MUCH THINGS I CAN'T EVEN LIST THEM ALL<br>>
     - Added TWO layer.<br>
     - Some banlace.<br>
     - F layer is currently disabled.<br>
