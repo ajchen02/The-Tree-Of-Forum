@@ -5,15 +5,15 @@ let modInfo = {
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js",'changelog.js'],
 
-	discordName: "",
-	discordLink: "",
+	discordName: "Forum Link",
+	discordLink: "https://forums.moddingtree.com/t/the-tree-of-forum-vote-area/599",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.04",
+	num: "0.1",
 	name: "IDK WHAT TO PUT AT HERE",
 }
 
@@ -62,4 +62,8 @@ function maxTickLength() {
 // Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
+	if (oldVersion < 0.04){
+		player.f.points = new Decimal(0)
+		player.f.unlocked=false
+	}
 }
