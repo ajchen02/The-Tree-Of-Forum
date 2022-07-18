@@ -19,7 +19,7 @@ function getPointGen() {
     if (hasUpgrade('a',24)) aGain = aGain.mul(tmp.a.upgrades[24].effect)
     let fGain = Decimal.d1
     if (tmp.f.effect.gte(1)) fGain = fGain.times(tmp.f.effect)
-	return base.times(pGain).mul(mGain).times(fGain)
+	return base.times(pGain).mul(mGain).mul(aGain).times(fGain)
 }
 
 addLayer("p", {
@@ -88,10 +88,10 @@ addLayer("p", {
             description:'Multiplies point gain based on last prestige reset gain.',
             cost: Decimal.d10,
             effect() {
-                return player[this.layer].last.max(Decimal.d1).log10().add(Decimal.d1)
+                return player[this.layer].last.max(Decimal.d1).log10().max(1)
                 //Alternative return player[this.layer].last.max(1).root(2)
             },
-            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
+            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
             //style: { margin: "-100px" }
         },
@@ -132,7 +132,7 @@ addLayer("m", {
     baseResource: "prestige point",         
     baseAmount() { return player.p.points },
 
-    requires: Decimal.d10,              
+    requires: Decimal.d20,              
     layerShown() {return hasUpgrade('p',14)||player[this.layer].unlocked||player.a.unlocked},
     hotkeys: [
         {key: "m", description: "M: Reset for milestones", onPress(){if (canReset(this.layer)) doReset(this.layer)},unlocked() {return player[this.layer].unlocked}},
@@ -187,16 +187,16 @@ addLayer("m", {
             name: "The Second Achievement.",
             done() { return player[this.layer].points.gte(2) },
             goalTooltip:'Just Get 2 Milestones, cmon that is easy.',
-            doneTooltip(){return 'Boost the first achievement by 1.5x PER MILESTONES.<br>'+'Currently: '+format(tmp.m.achievements[12].effect)+'x.'},
-            effect() {if (hasAchievement('m',12)) return new Decimal(1.5).pow(player[this.layer].points.max(1)); else return Decimal.d1},
+            doneTooltip(){return 'Boost the first achievement by 1.25x PER MILESTONES.<br>'+'Currently: '+format(tmp.m.achievements[12].effect)+'x.'},
+            effect() {if (hasAchievement('m',12)) return new Decimal(1.25).pow(player[this.layer].points.max(1)); else return Decimal.d1},
         },
         13: {
             unlocked(){return hasAchievement('m',12)},
             name: "I'M RUNNING OUT OF NAMES!!!",
             done() { return player[this.layer].points.gte(5) },
             goalTooltip:'Get 5 Milestones.<br> This is going to be a long one, I suggest you to play another layer first.',
-            doneTooltip(){return 'Boost the first achievement by 1.25x PER ACHIEVEMENTS.<br>'+'Currently: '+format(tmp.m.achievements[13].effect)+'x.'},
-            effect() {if (hasAchievement('m',13)) return new Decimal(player[this.layer].achievements.length).max(1).pow(1.25); else return Decimal.d1},
+            doneTooltip(){return 'Boost the first achievement by 1.5x PER ACHIEVEMENTS.<br>'+'Currently: '+format(tmp.m.achievements[13].effect)+'x.'},
+            effect() {if (hasAchievement('m',13)) return new Decimal(player[this.layer].achievements.length).max(1).pow(1.5); else return Decimal.d1},
         },
     },
     tabFormat: [
@@ -236,7 +236,7 @@ addLayer("a", {
     
     type: "custom",
     exponentBase:new Decimal(1.75),
-    mult: Decimal.d10,
+    mult: Decimal.d20,
     exponent: Decimal.d2,  
     getResetGain(){
         //console.log(player.f.points.add(Decimal.d1).div(this.mult).log(this.exponentBase))
@@ -303,17 +303,18 @@ addLayer("a", {
         22: {
             description:'Boost point gain.',
             cost: Decimal.d3,
-            effect(){return player.p.points.max(1).root(5).min(10)},
-            tooltip(){return 'Formula: 5√(prestige points)'+((upgradeEffect(this.layer,this.id).gte(Decimal.d10)&&hasUpgrade(this.layer,this.id))?'<br>Hardcapped at 10x':'')},
+            effect(){return player.points.max(1).log10().max(1).mul(2).root(2)},
+            tooltip:'Formula: 2√(log10(points)x2)',
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(20)},
             unlocked(){return player[this.layer].total.gte(5)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+
         },
         23: {
             description:'Boost point gain.',
             cost: Decimal.d3,
-            effect(){return player.points.max(1).log10().max(1).mul(2).root(2)},
-            tooltip:'Formula: 2√(log10(points)x2)',
+            effect(){return player.p.points.max(1).root(5).min(10)},
+            tooltip(){return 'Formula: 5√(prestige points)'+((upgradeEffect(this.layer,this.id).gte(Decimal.d10)&&hasUpgrade(this.layer,this.id))?'<br>Hardcapped at 10x':'')},
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(20)},
             unlocked(){return player[this.layer].total.gte(5)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
