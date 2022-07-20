@@ -39,7 +39,7 @@ addLayer("m", {
         /*Can't gain next*/ return 'Next at '+format(tmp[this.layer].getNextAt,tmp[this.layer].getNextAt.gte('1e9')?2:null)+' prestige points.<br>Maybe '+(
         (tmp[this.layer].baseAmount.lte(0))?(format(0)):(format(Decimal.max(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt),tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt.mul(100))).mul(100))))
         +'% completed?<br>or '+
-        format(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100))+'%, '+format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))+'%, '+format(Decimal.add(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100),format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))).div(2))+'%<br>'
+        format(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100))+'%, '+format(tmp[this.layer].baseAmount.max(1).log(tmp[this.layer].getNextAt).mul(100))+'%, '+format(Decimal.add(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100),format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))).div(2))+'%<br>'
         //+'It\'s very hard to predict an "pertenge" of this after all.'
         },
     exponent: Decimal.d2,                          
@@ -85,7 +85,7 @@ addLayer("m", {
             unlocked(){return hasAchievement('m',13)},
             name: "TheEgglet",
             done() { return player[this.layer].points.gte(8) },
-            goalTooltip:'Get 8 Milestones.<br>I guess you already have some features at another layer.',
+            goalTooltip:'Get 8 Milestones.<br>Gain spme of prestige point sould like an great idea.',
             doneTooltip(){return 'Gain 5% of prestige point per second.<br>'},
             effect() {return 'yes'},
         },

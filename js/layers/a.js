@@ -21,7 +21,7 @@ addLayer("a", {
     ],
     
     type: "custom",
-    exponentBase:new Decimal(1.75),
+    exponentBase:new Decimal(1.7),
     mult: Decimal.d20,
     exponent: Decimal.d2,  
     getResetGain(){
@@ -37,7 +37,7 @@ addLayer("a", {
     canReset(){return tmp[this.layer].getResetGain.gte(Decimal.d1)?true:false},
     prestigeButtonText(){return 'Reset for '+format(tmp[this.layer].getResetGain,0)+' '+tmp[this.layer].resource+'<br>Next at '+format(tmp[this.layer].getNextAt,0)+' prestige points<br>'+(
         (tmp[this.layer].baseAmount.lte(0))?(format(0)):(format(Decimal.max(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt),tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt.mul(100))).mul(100))))
-        +'% completed<br>('+format(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100))+'%, '+format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))+'%, '+format(Decimal.add(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100),format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))).div(2))+'%)'
+        +'% completed<br>('+format(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100))+'%, '+format(tmp[this.layer].baseAmount.max(1).log(tmp[this.layer].getNextAt).mul(100))+'%, '+format(Decimal.add(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100),format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))).div(2))+'%)'
     },                      
     canBuyMax(){return true},
     gainMult() {                            
@@ -81,8 +81,8 @@ addLayer("a", {
         21: {
             description:'Boost point gain.',
             cost: Decimal.d3,
-            effect(){return new Decimal(5)},
-            tooltip:'Formula: 5',
+            effect(){return new Decimal(7.5)},
+            tooltip:'Formula: 7.5',
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(20)},
             unlocked(){return player[this.layer].total.gte(5)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
@@ -90,8 +90,8 @@ addLayer("a", {
         22: {
             description:'Boost point gain.',
             cost: Decimal.d3,
-            effect(){return player.points.max(1).log10().max(1).mul(2).root(2)},
-            tooltip:'Formula: 2√(log10(points)x2)',
+            effect(){return player.points.max(1).log10().max(1).mul(6).root(2)},
+            tooltip:'Formula: 2√(log10(points)x6)',
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(20)},
             unlocked(){return player[this.layer].total.gte(5)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
@@ -109,8 +109,8 @@ addLayer("a", {
         24: {
             description:'Boost point gain.',
             cost: Decimal.d3,
-            effect(){return player[this.layer].total.root(2).max(1).add(1)},
-            tooltip:'Formula: 1+2√(total allodoxaphobia)',
+            effect(){return player[this.layer].total.root(1.5).max(1)},
+            tooltip:'Formula: 1.5√(total allodoxaphobia)',
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(20)},
             unlocked(){return player[this.layer].total.gte(5)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },

@@ -3,7 +3,7 @@ let modInfo = {
 	id: "TTOF_AjchenPath",
 	author: "TMT community",
 	pointsName: "points",
-	modFiles: ["layers/p.js","layers/m.js","layers/a.js","layers/f.js",		"tree.js",'changelog.js'],
+	modFiles: ["layers/p.js","layers/m.js","layers/a.js","layers/f.js","layers/stat.js",		"tree.js",'changelog.js'],
 
 	discordName: "Forum Link",
 	discordLink: "https://forums.moddingtree.com/t/the-tree-of-forum-vote-area/599",
@@ -32,14 +32,14 @@ function getPointGen() {
     if (hasUpgrade('a',24)) aGain = aGain.mul(tmp.a.upgrades[24].effect)
     let fGain = Decimal.d1
     if (tmp.f.effect.gte(1)) fGain = fGain.times(tmp.f.effect)
-	return base.times(pGain).mul(mGain).mul(aGain).times(fGain)
+	return {total:base.times(pGain).mul(mGain).mul(aGain).times(fGain),p:pGain,m:mGain,a:aGain,f:fGain}
 }
 
 
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.11",
+	num: "0.11.2",
 	name: "Profectus is so hard",
 }
 

@@ -54,9 +54,9 @@ addLayer("p", {
             description:'Boost point gain by point itself.',
             cost: Decimal.d5,
             effect() {
-                return player.points.add(Decimal.d1).log10().add(Decimal.d1)
+                return player.points.max(Decimal.d1).log10().max(Decimal.d1)
             },
-            tooltip:"Formula: Log10(x+1)+1",
+            tooltip:"Formula: Log10(x)",
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
         14: {
@@ -64,10 +64,10 @@ addLayer("p", {
             description:'Multiplies point gain based on last prestige reset gain.',
             cost: Decimal.d10,
             effect() {
-                return player[this.layer].last.max(Decimal.d1).log10().max(1)
+                return player[this.layer].last.max(1).log10().add(1)
                 //Alternative return player[this.layer].last.max(1).root(2)
             },
-            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)"},
+            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
             //style: { margin: "-100px" }
         },
