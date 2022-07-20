@@ -1,5 +1,8 @@
 
 let changelog = `<h1>Changelog:</h1><br>
+<br><h3>v0.11</h3><br>
+    - Added a new achievement.<br>
+    - Added more pertenge calculations.<br>
 <br><h3>v0.10.3</h3><br>
     - Fix an bug where a upgrade does nothing.<br>
     - Some banlace.<br>
