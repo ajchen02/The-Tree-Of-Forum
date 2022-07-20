@@ -78,8 +78,8 @@ addLayer("m", {
             name: "I'M RUNNING OUT OF NAMES!!!",
             done() { return player[this.layer].points.gte(5) },
             goalTooltip:'Get 5 Milestones.<br> This is going to be a long one, I suggest you to play another layer first.',
-            doneTooltip(){return 'Boost the first achievement by 1.5x PER ACHIEVEMENTS.<br>'+'Currently: '+format(tmp.m.achievements[13].effect)+'x.'},
-            effect() {if (hasAchievement('m',13)) return new Decimal(player[this.layer].achievements.length).max(1).pow(1.5); else return Decimal.d1},
+            doneTooltip(){return 'Boost the first achievement by 2x PER ACHIEVEMENTS.<br>'+'Currently: '+format(tmp.m.achievements[13].effect)+'x.'},
+            effect() {if (hasAchievement('m',13)) return new Decimal(2).pow(player[this.layer].achievements.length).max(1); else return Decimal.d1},
         },
         14: {
             unlocked(){return hasAchievement('m',13)},

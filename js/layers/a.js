@@ -23,10 +23,10 @@ addLayer("a", {
     type: "custom",
     exponentBase:new Decimal(1.7),
     mult: Decimal.d20,
-    exponent: Decimal.d2,  
+    //exponent: Decimal.d2,  
     getResetGain(){
-        //console.log(player.f.points.add(Decimal.d1).div(this.mult).log(this.exponentBase))
         if (tmp[this.layer].baseAmount.lt(this.requires)) return Decimal.d0
+        //(log[baseLog](baseRes+1)/mult))^2+1
         current = tmp[this.layer].baseAmount.add(Decimal.d1).div(this.mult).log(this.exponentBase).floor().add(Decimal.d1)
         return current.sub(player[this.layer].total).max(Decimal.d0)
     },
