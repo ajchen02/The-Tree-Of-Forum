@@ -1,5 +1,9 @@
 
 let changelog = `<h1>Changelog:</h1><br>
+<br><h3>v0.13</h3><br>
+    - Added a new achievement.<br>
+    - Some bailance.<br>
+    - bring back F layer with an new buyable.<br>
 <br><h3>v0.11.2</h3><br>
     - Added stats.<br>
     - some banlance.<br>

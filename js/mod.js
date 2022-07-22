@@ -14,24 +14,24 @@ let modInfo = {
 // Why you are seeing this, this is fulled of f*cked up code, bad design, and almost no programming.
 // Calculate points/sec!
 function getPointGen() {
-	if(!canGenPoints())return Decimal.d0
+	if(!canGenPoints())return d0
     
-    let base = Decimal.d1
-    let pGain = Decimal.d1
-    if (hasUpgrade('p',11)) pGain = pGain.times(Decimal.d2)
+    let base = d1
+    let pGain = d1
+    if (hasUpgrade('p',11)) pGain = pGain.times(d2)
     if (hasUpgrade('p',12)) pGain = pGain.times(tmp.p.upgrades[12].effect)
     if (hasUpgrade('p',13)) pGain = pGain.times(tmp.p.upgrades[13].effect)
     if (hasUpgrade('p',14)) pGain = pGain.times(tmp.p.upgrades[14].effect)
-    let mGain = Decimal.d1
+    let mGain = d1
     if (hasAchievement('m',11)) mGain = mGain.times(tmp.m.achievements[11].effect)
     //if (hasAchievement('m',12)) mGain = mGain.times(tmp.m.achievements[12].effect)
-    let aGain = Decimal.d1
+    let aGain = d1
     if (hasUpgrade('a',21)) aGain = aGain.mul(tmp.a.upgrades[21].effect)
     if (hasUpgrade('a',22)) aGain = aGain.mul(tmp.a.upgrades[22].effect)
     if (hasUpgrade('a',23)) aGain = aGain.mul(tmp.a.upgrades[23].effect)    
     if (hasUpgrade('a',24)) aGain = aGain.mul(tmp.a.upgrades[24].effect)
-    let fGain = Decimal.d1
-    if (tmp.f.effect.gte(1)) fGain = fGain.times(tmp.f.effect)
+    let fGain = d1
+    //if (tmp.f.effect.gte(1)) fGain = fGain.times(tmp.f.effect)
 	return {total:base.times(pGain).mul(mGain).mul(aGain).times(fGain),p:pGain,m:mGain,a:aGain,f:fGain}
 }
 
@@ -39,7 +39,7 @@ function getPointGen() {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.11.2",
+	num: "0.13",
 	name: "Profectus is so hard",
 }
 
@@ -47,10 +47,10 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
+var doNotCallTheseFunctionsEveryTick = ['inBranch',"blowUpEverything"]
 
 function getStartPoints(){
-    return new Decimal(modInfo.initialStartPoints)
+    return n(modInfo.initialStartPoints)
 }
 
 // Determines if it should show points/sec
@@ -68,7 +68,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return hasAchievement('m',15)
 }
 
 
@@ -89,7 +89,7 @@ function maxTickLength() {
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
 	if (oldVersion < 0.04){
-		player.f.points = new Decimal(0)
+		player.f.points = n(0)
 		player.f.unlocked=false
 	}
 }

@@ -2,7 +2,7 @@
 addLayer("m", {
     startData() { return {                  
         unlocked: false,                    
-        points: Decimal.d0,             
+        points: d0,             
     }},
 
     color: "#793784",                       
@@ -10,20 +10,21 @@ addLayer("m", {
     row: 2,
     position: 0,                        
     branches:['p'],
+    inBranch(layer){return this.branches.includes(layer)},
     baseResource: "prestige point",         
     baseAmount() { return player.p.points },
 
-    requires: Decimal.d20,              
+    requires: d20,              
     layerShown() {return hasUpgrade('p',14)||player[this.layer].unlocked||player.a.unlocked},
     hotkeys: [
         {key: "m", description: "M: Reset for milestones", onPress(){if (canReset(this.layer)) doReset(this.layer)},unlocked() {return player[this.layer].unlocked}},
     ],
     type: "custom",
-    exponentBase: Decimal.d2,
-    mult: Decimal.d20,
+    exponentBase: d2,
+    mult: d20,
     getResetGain(){
-        //console.log(player.f.points.add(Decimal.d1).div(this.mult).log(this.exponentBase))
-        if (tmp[this.layer].baseAmount.lt(tmp[this.layer].requires)) return Decimal.d0
+        //console.log(player.f.points.add(d1).div(this.mult).log(this.exponentBase))
+        if (tmp[this.layer].baseAmount.lt(tmp[this.layer].requires)) return d0
         current = tmp[this.layer].baseAmount.div(this.mult).max(1).log(this.exponentBase).floor().add(1)
         if (tmp[this.layer].canBuyMax) return current.sub(player[this.layer].points).max(0)
         return current.sub(player[this.layer].points).max(0).min(1)
@@ -42,16 +43,16 @@ addLayer("m", {
         format(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100))+'%, '+format(tmp[this.layer].baseAmount.max(1).log(tmp[this.layer].getNextAt).mul(100))+'%, '+format(Decimal.add(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100),format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))).div(2))+'%<br>'
         //+'It\'s very hard to predict an "pertenge" of this after all.'
         },
-    exponent: Decimal.d2,                          
+    exponent: d2,                          
     canBuyMax(){return false},
     prestigeNotify(){
         if (tmp[this.layer].getResetGain.gte(1)) return true
     },
     gainMult() {                            
-        return Decimal.d1               
+        return d1               
     },
     gainExp() {                             
-        return Decimal.d1
+        return d1
     },          
 
     upgrades: {
@@ -63,7 +64,7 @@ addLayer("m", {
             name: "I Thought I'm Getting Milestones?",
             done() { return player[this.layer].points.gte(1) },
             tooltip(){return 'Milestones take too many spaces...<br>Currently: Boost point gain by '+format(tmp.m.achievements[11].effect)+'x.'},
-            effect() {if (hasAchievement('m',11)) return Decimal.d2.mul(tmp.m.achievements[12].effect).mul(tmp.m.achievements[13].effect); else return Decimal.d1},
+            effect() {if (hasAchievement('m',11)) return d2.mul(tmp.m.achievements[12].effect).mul(tmp.m.achievements[13].effect); else return d1},
         },
         12: {
             unlocked(){return hasAchievement('m',11)},
@@ -71,15 +72,15 @@ addLayer("m", {
             done() { return player[this.layer].points.gte(2) },
             goalTooltip:'Just Get 2 Milestones, cmon that is easy.',
             doneTooltip(){return 'Boost the first achievement by 1.25x PER MILESTONES.<br>'+'Currently: '+format(tmp.m.achievements[12].effect)+'x.'},
-            effect() {if (hasAchievement('m',12)) return new Decimal(1.25).pow(player[this.layer].points.max(1)); else return Decimal.d1},
+            effect() {if (hasAchievement('m',12)) return n(1.25).pow(player[this.layer].points.max(1)); else return d1},
         },
         13: {
             unlocked(){return hasAchievement('m',12)},
             name: "I'M RUNNING OUT OF NAMES!!!",
             done() { return player[this.layer].points.gte(5) },
             goalTooltip:'Get 5 Milestones.<br> This is going to be a long one, I suggest you to play another layer first.',
-            doneTooltip(){return 'Boost the first achievement by 2x PER ACHIEVEMENTS.<br>'+'Currently: '+format(tmp.m.achievements[13].effect)+'x.'},
-            effect() {if (hasAchievement('m',13)) return new Decimal(2).pow(player[this.layer].achievements.length).max(1); else return Decimal.d1},
+            doneTooltip(){return 'Boost the first achievement by 1.5x PER ACHIEVEMENTS.<br>'+'Currently: '+format(tmp.m.achievements[13].effect)+'x.'},
+            effect() {if (hasAchievement('m',13)) return n(1.5).pow(player[this.layer].achievements.length).max(1); else return d1},
         },
         14: {
             unlocked(){return hasAchievement('m',13)},
@@ -87,7 +88,15 @@ addLayer("m", {
             done() { return player[this.layer].points.gte(8) },
             goalTooltip:'Get 8 Milestones.<br>Gain spme of prestige point sould like an great idea.',
             doneTooltip(){return 'Gain 5% of prestige point per second.<br>'},
-            effect() {return 'yes'},
+            effect:'yes',
+        },
+        15: {
+            unlocked(){return hasAchievement('m',14)&&getBuyableAmount('f',12).gte(1)},
+            name: "allodox-aphilia",
+            done() { return player[this.layer].points.gte(10)&&getBuyableAmount('f',12).gte(1) },
+            goalTooltip:'Get 10 Milestones.<br>Now some people will be mad cuz i programmed something to unlock something to unlock something.',
+            doneTooltip(){return 'Allows you to buy all row one upgrades in the allodoxaphobia layer.'},
+            effect:'yes',
         },
     },
     tabFormat: [

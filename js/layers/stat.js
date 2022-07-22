@@ -17,9 +17,10 @@ addLayer("stat", {
     "blank",
         ["display-text",function(){
             words=''
-            if (player.p.unlocked){words+='Prestige layer totally boost your point gain by '+format(tmp.moreGen.p)+'x ('+format(tmp.moreGen.p.log(tmp.pointGen).mul(100))+'%)<br>'}
-            if (player.m.unlocked){words+='Milestone layer totally boost your point gain by '+format(tmp.moreGen.m)+'x ('+format(tmp.moreGen.m.log(tmp.pointGen).mul(100))+'%)<br>'}
-            if (player.a.unlocked){words+='Allodoxaphobia layer totally boost your point gain by '+format(tmp.moreGen.a)+'x ('+format(tmp.moreGen.a.log(tmp.pointGen).mul(100))+'%)<br>'}
+            if (player.p.unlocked){words+='Prestige layer has boost your point gain by '+format(tmp.moreGen.p)+'x ('+format(tmp.moreGen.p.log(tmp.pointGen).mul(100))+'%)<br>'}
+            if (player.m.unlocked){words+='Milestone layer boost has your point gain by '+format(tmp.moreGen.m)+'x ('+format(tmp.moreGen.m.log(tmp.pointGen).mul(100))+'%)<br>'}
+            if (player.a.unlocked){words+='Allodoxaphobia layer has boost your point gain by '+format(tmp.moreGen.a)+'x ('+format(tmp.moreGen.a.log(tmp.pointGen).mul(100))+'%)<br>'}
+            if (player.a.unlocked){words+='Fruits layer has boost your point gain by '+format(tmp.moreGen.f)+'x ('+format(tmp.moreGen.f.log(tmp.pointGen).mul(100))+'%)<br>'}
             return words
         }],
         
