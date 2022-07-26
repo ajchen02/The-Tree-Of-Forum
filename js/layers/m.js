@@ -10,7 +10,6 @@ addLayer("m", {
     row: 2,
     position: 0,                        
     branches:['p'],
-    inBranch(layer){return this.branches.includes(layer)},
     baseResource: "prestige point",         
     baseAmount() { return player.p.points },
 
@@ -64,7 +63,7 @@ addLayer("m", {
             name: "I Thought I'm Getting Milestones?",
             done() { return player[this.layer].points.gte(1) },
             tooltip(){return 'Milestones take too many spaces...<br>Currently: Boost point gain by '+format(tmp.m.achievements[11].effect)+'x.'},
-            effect() {if (hasAchievement('m',11)) return d2.mul(tmp.m.achievements[12].effect).mul(tmp.m.achievements[13].effect); else return d1},
+            effect() {if (hasAchievement('m',11)) return d2.mul(tmp.m.achievements[12].effect).mul(tmp.m.achievements[14].effect); else return d1},
         },
         12: {
             unlocked(){return hasAchievement('m',11)},
@@ -75,25 +74,34 @@ addLayer("m", {
             effect() {if (hasAchievement('m',12)) return n(1.25).pow(player[this.layer].points.max(1)); else return d1},
         },
         13: {
-            unlocked(){return hasAchievement('m',12)},
-            name: "I'M RUNNING OUT OF NAMES!!!",
-            done() { return player[this.layer].points.gte(5) },
-            goalTooltip:'Get 5 Milestones.<br> This is going to be a long one, I suggest you to play another layer first.',
-            doneTooltip(){return 'Boost the first achievement by 1.5x PER ACHIEVEMENTS.<br>'+'Currently: '+format(tmp.m.achievements[13].effect)+'x.'},
-            effect() {if (hasAchievement('m',13)) return n(1.5).pow(player[this.layer].achievements.length).max(1); else return d1},
+            unlocked(){return hasAchievement('m',12)||player.s.unlocked},
+            name: "Skills",
+            done() { return player[this.layer].points.gte(3)},
+            goalTooltip:'Get 3 Milestones.<br>You have the skill to do this.',
+            doneTooltip(){return 'Unlock skills layer.'},
+            onComplete(){player.s.unlocked=true},
+            effect:'yes',
         },
         14: {
             unlocked(){return hasAchievement('m',13)},
+            name: "I'M RUNNING OUT OF NAMES!!!",
+            done() { return player[this.layer].points.gte(5) },
+            goalTooltip:'Get 5 Milestones.<br>Really.',
+            doneTooltip(){return 'Boost the first achievement by 1.5x PER ACHIEVEMENTS.<br>'+'Currently: '+format(tmp.m.achievements[13].effect)+'x.'},
+            effect() {if (hasAchievement('m',13)) return n(1.5).pow(player[this.layer].achievements.length).max(1); else return d1},
+        },
+        15: {
+            unlocked(){return hasAchievement('m',14)},
             name: "TheEgglet",
             done() { return player[this.layer].points.gte(8) },
             goalTooltip:'Get 8 Milestones.<br>Gain spme of prestige point sould like an great idea.',
             doneTooltip(){return 'Gain 5% of prestige point per second.<br>'},
             effect:'yes',
         },
-        15: {
-            unlocked(){return hasAchievement('m',14)&&getBuyableAmount('f',12).gte(1)},
+        16: {
+            unlocked(){return hasAchievement('m',15)&&getBuyableAmount('f',21).gte(1)},
             name: "allodox-aphilia",
-            done() { return player[this.layer].points.gte(10)&&getBuyableAmount('f',12).gte(1) },
+            done() { return player[this.layer].points.gte(10)&&tmp[this.layer].achievements[this.id].unlocked},
             goalTooltip:'Get 10 Milestones.<br>Now some people will be mad cuz i programmed something to unlock something to unlock something.',
             doneTooltip(){return 'Allows you to buy all row one upgrades in the allodoxaphobia layer.'},
             effect:'yes',
@@ -111,4 +119,10 @@ addLayer("m", {
                         else return 'achievements'},
             
         ],
+    doReset(resettingLayer) {
+        if (resettingLayer==this.layer||!(inBranch(this.layer,resettingLayer))) return;
+        if (hasAchievement('m',13)) keepM13=true; else keepM13=false
+        layerDataReset(this.layer)
+        if (keepM13) player[this.layer].achievements.push(13)
+    },
 })

@@ -3,7 +3,7 @@ let modInfo = {
 	id: "TTOF_AjchenPath",
 	author: "TMT community",
 	pointsName: "points",
-	modFiles: ["layers/p.js","layers/m.js","layers/a.js","layers/f.js","layers/stat.js",		"tree.js",'changelog.js'],
+	modFiles: ["layers/p.js","layers/m.js","layers/a.js","layers/f.js","layers/s.js","layers/stat.js",		"tree.js",'changelog.js'],
 
 	discordName: "Forum Link",
 	discordLink: "https://forums.moddingtree.com/t/the-tree-of-forum-vote-area/599",
@@ -11,35 +11,10 @@ let modInfo = {
 	offlineLimit: 1,  // In hours
 }
 
-// Why you are seeing this, this is fulled of f*cked up code, bad design, and almost no programming.
-// Calculate points/sec!
-function getPointGen() {
-	if(!canGenPoints())return d0
-    
-    let base = d1
-    let pGain = d1
-    if (hasUpgrade('p',11)) pGain = pGain.times(d2)
-    if (hasUpgrade('p',12)) pGain = pGain.times(tmp.p.upgrades[12].effect)
-    if (hasUpgrade('p',13)) pGain = pGain.times(tmp.p.upgrades[13].effect)
-    if (hasUpgrade('p',14)) pGain = pGain.times(tmp.p.upgrades[14].effect)
-    let mGain = d1
-    if (hasAchievement('m',11)) mGain = mGain.times(tmp.m.achievements[11].effect)
-    //if (hasAchievement('m',12)) mGain = mGain.times(tmp.m.achievements[12].effect)
-    let aGain = d1
-    if (hasUpgrade('a',21)) aGain = aGain.mul(tmp.a.upgrades[21].effect)
-    if (hasUpgrade('a',22)) aGain = aGain.mul(tmp.a.upgrades[22].effect)
-    if (hasUpgrade('a',23)) aGain = aGain.mul(tmp.a.upgrades[23].effect)    
-    if (hasUpgrade('a',24)) aGain = aGain.mul(tmp.a.upgrades[24].effect)
-    let fGain = d1
-    //if (tmp.f.effect.gte(1)) fGain = fGain.times(tmp.f.effect)
-	return {total:base.times(pGain).mul(mGain).mul(aGain).times(fGain),p:pGain,m:mGain,a:aGain,f:fGain}
-}
-
-
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.13",
+	num: "0.16",
 	name: "Profectus is so hard",
 }
 

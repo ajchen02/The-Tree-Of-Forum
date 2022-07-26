@@ -43,11 +43,11 @@ addLayer("p", {
             description: "Boost your point gain based on your prestige point.",
             cost: d3,
             effect() {
-                //return player[this.layer].points.add(d1).pow(d2).min(d5)
-                return hasUpgrade(this.layer,this.id)?player[this.layer].points.add(d1).pow(d2).min(d5):player[this.layer].points.add(d1).pow(d2)
+                //return player[this.layer].points.add(d1).sqrt().min(d5)
+                return hasUpgrade(this.layer,this.id)?player[this.layer].points.add(d1).sqrt().min(d5):player[this.layer].points.add(d1).sqrt()
             },
             //tooltip:"(And a +1 output as Fawwaz Arkan suggest)",
-            tooltip(){return ((upgradeEffect(this.layer, this.id).gte(d5)&&hasUpgrade(this.layer,this.id))?'Sorry I forgot<br>Hardcapped at 5x<br>':'')+"Formula: x^2"},
+            tooltip(){return ((upgradeEffect(this.layer, this.id).gte(d5)&&hasUpgrade(this.layer,this.id))?'Sorry I forgor<br>Hardcapped at 5x<br>':'')+"Formula: x^2"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         13: {
@@ -72,9 +72,65 @@ addLayer("p", {
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
             //style: { margin: "-100px" }
         },
+        21: {
+            title:'QwQe308',
+            description:'Boost first upgrade.',
+            cost: d10,
+            effect() {
+                return player[this.layer].last.max(1).log10().add(1)
+                //Alternative return player[this.layer].last.max(1).root(2)
+            },
+            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            unlocked(){
+                return getBuyableAmount('f',11).gte(1)
+            }
+        },
+        22: {
+            title:'QwQe308',
+            description:'Boost ← upgrade.',
+            cost: d10,
+            effect() {
+                return player[this.layer].last.max(1).log10().add(1)
+                //Alternative return player[this.layer].last.max(1).root(2)
+            },
+            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            unlocked(){
+                return getBuyableAmount('f',11).gte(2)
+            }
+        },
+        23: {
+            title:'QwQe308',
+            description:'Boost ← upgrade.',
+            cost: d10,
+            effect() {
+                return player[this.layer].last.max(1).log10().add(1)
+                //Alternative return player[this.layer].last.max(1).root(2)
+            },
+            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            unlocked(){
+                return getBuyableAmount('f',11).gte(3)
+            }
+        },
+        24: {
+            title:'QwQe308',
+            description:'Boost ← upgrade.',
+            cost: d10,
+            effect() {
+                return player[this.layer].last.max(1).log10().add(1)
+                //Alternative return player[this.layer].last.max(1).root(2)
+            },
+            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            unlocked(){
+                return getBuyableAmount('f',11).gte(4)
+            }
+        },
     },
     doReset(resettingLayer) {
-        if (resettingLayer==this.layer||!(layers[resettingLayer].inBranch(this.layer))) return;
+        if (resettingLayer==this.layer||!(inBranch(this.layer,resettingLayer))) return;
         keepUpgrades=[]
         if (hasUpgrade('a',11)) keepUpgrades.push(11)
         if (hasUpgrade('a',12)) keepUpgrades.push(12)
@@ -92,6 +148,6 @@ addLayer("p", {
         'upgrades',
     ],
     layerShown(){return true},
-    passiveGeneration(){if (hasAchievement('m',14)) return 0.05
+    passiveGeneration(){if (hasAchievement('m',15)) return 0.05
         return 0},
 }) 

@@ -1,12 +1,16 @@
 
 let changelog = `<h1>Changelog:</h1><br>
+<br><h3>v0.16</h3><br>
+    - Added something i forgor<br>
+    - Some banlance.<br>
+    - Fixed pow(0.5) issue...<br>
 <br><h3>v0.13</h3><br>
     - Added a new achievement.<br>
     - Some bailance.<br>
-    - bring back F layer with an new buyable.<br>
+    - Bring back F layer with an new buyable.<br>
 <br><h3>v0.11.2</h3><br>
     - Added stats.<br>
-    - some banlance.<br>
+    - Some banlance.<br>
 <br><h3>v0.11</h3><br>
     - Added a new achievement.<br>
     - Added more pertenge calculations.<br>

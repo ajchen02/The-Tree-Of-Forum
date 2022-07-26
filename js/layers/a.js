@@ -12,7 +12,6 @@ addLayer("a", {
     row: 2,              
     position: 1,                    
     branches:['p'],
-    inBranch(layer){return this.branches.includes(layer)},
     baseResource: "prestige point",         
     baseAmount() { return player.p.points },
     layerShown() {return hasUpgrade('p',14)||player[this.layer].unlocked||player.m.unlocked},
@@ -49,8 +48,9 @@ addLayer("a", {
     },
     upgradesLimition() {
         limited = []
-        if (((hasUpgrade(this.layer,11)+hasUpgrade(this.layer,12)+hasUpgrade(this.layer,13)+hasUpgrade(this.layer,14))>=2)&&!hasAchievement('m',15)) limited.push(10)
+        if (((hasUpgrade(this.layer,11)+hasUpgrade(this.layer,12)+hasUpgrade(this.layer,13)+hasUpgrade(this.layer,14))>=2)&&!hasAchievement('m',16)) limited.push(10)
         if ((hasUpgrade(this.layer,21)+hasUpgrade(this.layer,22)+hasUpgrade(this.layer,23)+hasUpgrade(this.layer,24))>=2) limited.push(20)
+        if ((hasUpgrade(this.layer,31)+hasUpgrade(this.layer,32)+hasUpgrade(this.layer,33)+hasUpgrade(this.layer,34))>=2) limited.push(30)
         return limited
     },
     upgrades: {
@@ -82,7 +82,7 @@ addLayer("a", {
         21: {
             description:'Boost point gain.',
             cost: d3,
-            effect(){return n(7.5)},
+            effect: n(7.5),
             tooltip:'Formula: 7.5',
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(20)},
             unlocked(){return player[this.layer].total.gte(5)},
@@ -116,6 +116,42 @@ addLayer("a", {
             unlocked(){return player[this.layer].total.gte(5)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
+        31: {
+            description:'Boost point gain.',
+            cost: d7,
+            effect(){return d10},
+            tooltip:'Formula: 10',
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
+            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        },
+        32: {
+            description:'Boost point gain.',
+            cost: d7,
+            effect(){return player[this.layer].total.root(1.5).max(1)},
+            tooltip:'Formula: 1.5√(total allodoxaphobia)',
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
+            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        },
+        33: {
+            description:'Boost point gain.',
+            cost: d7,
+            effect(){return player[this.layer].total.root(1.5).max(1)},
+            tooltip:'Formula: 1.5√(total allodoxaphobia)',
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
+            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        },
+        34: {
+            description:'Boost point gain.',
+            cost: d7,
+            effect(){return player[this.layer].total.root(1.5).max(1)},
+            tooltip:'Formula: 2*(haved allodoxaphobia upgrade amount)',
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
+            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        },
 
     },
     clickables:{
@@ -139,9 +175,11 @@ addLayer("a", {
         'resource-display',
         function(){if (player[this.layer].unlocked){
             if (player[this.layer].total.lt(5)) return ["display-text","Next row of upgrades unlock at 5 allodoxaphobia."];
+            if (player[this.layer].total.lt(15)&&getBuyableAmount('f',22).gte(1)) return ["display-text","Next row of upgrades unlock at 15 allodoxaphobia."];
             return ["display-text","All upgrades unlocked!"]
         }},
         'blank',
+        function(){if (!player[this.layer].unlocked) return ["display-image", 'js/images/choseing dilma.jpg',{maxWidth:'60%',maxHeight:'60%'}]},
         function(){if (!player[this.layer].unlocked) return ["display-text","Just to make people having choseing dilemas.<br>----says the suggest-er @Shinwmyste#1926"]
         else return ["display-text","You can only have 2 upgrades in a row."]},
         function(){if (player[this.layer].unlocked) return "clickables"},

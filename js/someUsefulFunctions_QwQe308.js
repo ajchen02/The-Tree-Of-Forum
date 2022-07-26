@@ -14,6 +14,10 @@ var d10 = new Decimal(10);      var d100 = new Decimal(100)
 function n(num){
     return new Decimal(num)
 }
+//检测节点是否连接
+function inBranch(node,layer){
+    return layers[layer].branches.includes(node)
+}
 /*
 //检测旁边的升级是否被购买
 function checkAroundUpg(UPGlayer,place){
