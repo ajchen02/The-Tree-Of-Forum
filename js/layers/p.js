@@ -13,7 +13,25 @@ addLayer("p", {
     resource: "prestige points", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
-    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    
+    type: "custom",
+    exponentBase: d2,
+    mult: d10,
+    getResetGain(){
+        //console.log(player.f.points.add(d1).div(this.mult).log(this.exponentBase))
+        if (tmp[this.layer].baseAmount.lt(10)) return d0
+        current = tmp[this.layer].baseAmount.add(d1).div(this.mult).log(this.exponentBase).floor().add(d1)
+        //log[exBase]((x+1)/20).floor+1
+        return current.max(0) //.sub(player[this.layer].points).max(d0)
+    },
+    getNextAt(canMax=false){
+        let current=tmp[this.layer].getResetGain//.add(player[this.layer].points)
+        return this.exponentBase.pow(current).times(this.mult)
+    },
+    canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
+    prestigeButtonText(){ if (!tmp[this.layer].getResetGain.lte(100)) return 'Reset for '+format(tmp[this.layer].getResetGain,0)+' prestige points'
+        return 'Reset for '+format(tmp[this.layer].getResetGain,0)+' prestige points<br>Next at '+format(tmp[this.layer].getNextAt,0)+' prestige points'},
+
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         let mult = d1
