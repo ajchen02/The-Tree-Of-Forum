@@ -2736,7 +2736,7 @@ for (var i = 0; i < 10; ++i)
 //  Decimal.dSeven = FC_NN(1, 0, 7);            Decimal.d7 = FC_NN(1,0,7);
 //  Decimal.dEight = FC_NN(1, 0, 8);            Decimal.d8 = FC_NN(1,0,8);
 //  Decimal.dNine = FC_NN(1, 0, 9);             Decimal.d9 = FC_NN(1,0,9);
-//	Decimal.dTen = FC_NN(1, 0, 10);             Decimal.d10 = FC_NN(1,0,10);
+	Decimal.dTen = FC_NN(1, 0, 10);             Decimal.d10 = FC_NN(1,0,10);
 //  Decimal.dTwenty = FC_NN(1, 0, 20);          Decimal.d20 = FC_NN(1,0,20);
 //  Decimal.dThirty = FC_NN(1, 0, 30);          Decimal.d30 = FC_NN(1,0,30);
 //  Decimal.dForty = FC_NN(1, 0, 40);           Decimal.d40 = FC_NN(1,0,40);

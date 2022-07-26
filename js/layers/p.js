@@ -15,18 +15,18 @@ addLayer("p", {
     baseAmount() {return player.points}, // Get the current amount of baseResource
     
     type: "custom",
-    exponentBase: d2,
+    exponentBase: n(0.5),
     mult: d10,
     getResetGain(){
         //console.log(player.f.points.add(d1).div(this.mult).log(this.exponentBase))
         if (tmp[this.layer].baseAmount.lt(10)) return d0
-        current = tmp[this.layer].baseAmount.add(d1).div(this.mult).log(this.exponentBase).floor().add(d1)
+        let current = tmp[this.layer].baseAmount.add(1).div(this.mult).pow(this.exponentBase).floor()
         //log[exBase]((x+1)/20).floor+1
         return current.max(0) //.sub(player[this.layer].points).max(d0)
     },
     getNextAt(canMax=false){
         let current=tmp[this.layer].getResetGain//.add(player[this.layer].points)
-        return this.exponentBase.pow(current).times(this.mult)
+        return current.add(1).root(this.exponentBase).times(this.mult).floor()
     },
     canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
     prestigeButtonText(){ if (!tmp[this.layer].getResetGain.lte(100)) return 'Reset for '+format(tmp[this.layer].getResetGain,0)+' prestige points'
@@ -61,11 +61,13 @@ addLayer("p", {
             description: "Boost your point gain based on your prestige point.",
             cost: d3,
             effect() {
-                //return player[this.layer].points.add(d1).sqrt().min(d5)
-                return hasUpgrade(this.layer,this.id)?player[this.layer].points.add(d1).sqrt().min(d5):player[this.layer].points.add(d1).sqrt()
+                //return hasUpgrade(this.layer,this.id)?player[this.layer].points.add(d1).sqrt().min(d5):player[this.layer].points.add(d1).sqrt()
+                if (!hasUpgrade(this.layer,this.id))return player[this.layer].points.add(d1).pow(2)
+                if (hasUpgrade('a',32))return player[this.layer].points.add(d1).pow(2).min(d5.add(upgradeEffect('a',32)))
+                return player[this.layer].points.add(d1).pow(2).min(d5)
             },
             //tooltip:"(And a +1 output as Fawwaz Arkan suggest)",
-            tooltip(){return ((upgradeEffect(this.layer, this.id).gte(d5)&&hasUpgrade(this.layer,this.id))?'Sorry I forgor<br>Hardcapped at 5x<br>':'')+"Formula: x^2"},
+            tooltip(){return ((upgradeEffect(this.layer, this.id).eq(d5)&&hasUpgrade(this.layer,this.id))?'Sorry I forgor<br>Hardcapped at 5x<br>':'')+"Formula: x^2"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         13: {

@@ -117,22 +117,28 @@ addLayer("a", {
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
         31: {
-            description:'Boost point gain.',
+            description:'Boost Prestige Upgrade 11.',
             cost: d7,
-            effect(){return d10},
-            tooltip:'Formula: 10',
+            effect(){return d2.mul(player.p.upgrades.length)},
+            tooltip:'Effect: 2*(Amount of Prestige Upgrade you have)',
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
             unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
         32: {
-            description:'Boost point gain.',
+            description:'Boost Prestige upgrade 12.',
             cost: d7,
-            effect(){return player[this.layer].total.root(1.5).max(1)},
-            tooltip:'Formula: 1.5√(total allodoxaphobia)',
+            effect(){
+                let p=player.p.points.max(1).log10()
+                let m=player.m.points.max(1).div(5)
+                let a=player.a.total.max(1).div(5)
+                //console.log('p: '+p+' m: '+m+' a: '+a)
+                return p.add(m).add(a).mul(2)
+            },
+            tooltip:'Effect: increases prestige upgrade 2\'s hardcap based on p, m and a.',
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
             unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            effectDisplay() { return 'Pushed '+format(upgradeEffect(this.layer, this.id))+" further" },
         },
         33: {
             description:'Boost point gain.',

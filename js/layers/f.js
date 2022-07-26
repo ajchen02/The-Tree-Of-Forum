@@ -96,7 +96,7 @@ addLayer("f", {
             cost(x) { return d3.pow(x.add(1)) },
             display() { 
                 return "Unlock rows of upgrades in allodoxaphobia layer.<br><br>"
-                    +'Currently: unlocked '+format(getBuyableAmount(this.layer, this.id),0)+' achievements.<br><br>'
+                    +'Currently: unlocked '+format(getBuyableAmount(this.layer, this.id),0)+' new achievement rows.<br><br>'
                     +'Cost:'+(getBuyableAmount(this.layer, this.id).gte(tmp[this.layer].buyables[this.id].purchaseLimit)?"MAXED":(format(this.cost(),0)+' fruits<br>'))
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
