@@ -2726,8 +2726,8 @@ for (var i = 0; i < 10; ++i)
     return Decimal;
   }();
 
-//	Decimal.dZero = FC_NN(0, 0, 0);             Decimal.d0 = FC_NN(0,0,0);
-//	Decimal.dOne = FC_NN(1, 0, 1);              Decimal.d1 = FC_NN(1,0,1);
+	Decimal.dZero = FC_NN(0, 0, 0);             Decimal.d0 = FC_NN(0,0,0);
+	Decimal.dOne = FC_NN(1, 0, 1);              Decimal.d1 = FC_NN(1,0,1);
 //	Decimal.dTwo = FC_NN(1, 0, 2);              Decimal.d2 = FC_NN(1,0,2);
 //  Decimal.dThree = FC_NN(1, 0, 3);            Decimal.d3 = FC_NN(1,0,3);
 //  Decimal.dFour = FC_NN(1, 0, 4);             Decimal.d4 = FC_NN(1,0,4);

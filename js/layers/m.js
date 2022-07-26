@@ -2,7 +2,7 @@
 addLayer("m", {
     startData() { return {                  
         unlocked: false,                    
-        points: d0,             
+        points: d0,         
     }},
 
     color: "#793784",                       
@@ -12,6 +12,10 @@ addLayer("m", {
     branches:['p'],
     baseResource: "prestige point",         
     baseAmount() { return player.p.points },
+    achievementPopups(){
+        tmp[this.layer].achievementPopups=player[this.layer].achievementPopups
+        return tmp[this.layer].achievementPopups
+    },    
 
     requires: d20,              
     layerShown() {return hasUpgrade('p',14)||player[this.layer].unlocked||player.a.unlocked},
@@ -111,10 +115,9 @@ addLayer("m", {
             "main-display",
             ["prestige-button",,{width:'240px',height:'120px'}],
             'resource-display',
-            /*function(){if (player[this.layer].unlocked) {switch(player[this.layer].achievements.length){
-                case 1: var next=2; break
-                case 2: var next=0; break}
-            return ["display-text",(next!=0)?'Next achievement unlock at '+next.toString()+' milestones':'All achievements unlocked!']}},*/
+            function(){if (player.f.unlocked) return ['row',[["display-text",'Noitfy when new achievements:'],['toggle',['m','achievementPopups']],]]},
+            //I SWARE TO GOD THAT LINE WAS THE SHITTEST TABLAYOUT I EVER DID
+            function(){if (player.f.unlocked) return 'blank'},
             function(){if (!player[this.layer].unlocked) return ["display-text",'That prestige butten is \"\"\"slightly\"\"\" wider just for good looking.']
                         else return 'achievements'},
             
