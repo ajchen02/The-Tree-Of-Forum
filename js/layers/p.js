@@ -29,8 +29,8 @@ addLayer("p", {
         return current.add(1).root(this.exponentBase).times(this.mult).floor()
     },
     canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
-    prestigeButtonText(){ if (!tmp[this.layer].getResetGain.lte(100)) return 'Reset for '+format(tmp[this.layer].getResetGain,0)+' prestige points'
-        return 'Reset for '+format(tmp[this.layer].getResetGain,0)+' prestige points<br>Next at '+format(tmp[this.layer].getNextAt,0)+' prestige points'},
+    prestigeButtonText(){ if (!tmp[this.layer].getResetGain.lte(100)) return 'Reset for <b>+'+format(tmp[this.layer].getResetGain,0)+'</b> prestige points'
+        return 'Reset for <b>+'+format(tmp[this.layer].getResetGain,0)+'</b> prestige points<br>Next at '+format(tmp[this.layer].getNextAt,0)+' points'},
 
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
