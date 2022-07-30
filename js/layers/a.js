@@ -123,14 +123,13 @@ addLayer("a", {
             description:'Automatically reset allodoxaphobia.',
             tooltip:'WARNING: This will reset whenever it can, so it might cause slower progress.',
             cost: d6,
-            effect(){return player[this.layer].total.root(1.5).max(1)},
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
             unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
         },
         32: {
             description:'allodoxaphobia doesn\'t reset anything.',
             cost: d7,
-            canAfford(){return false},
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
             unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
         },
         33: {
@@ -211,6 +210,7 @@ addLayer("a", {
         function(){if (player[this.layer].unlocked){
             if (player[this.layer].total.lt(5)) return ["display-text","Next row of upgrades unlock at 5 allodoxaphobia."];
             if (player[this.layer].total.lt(15)&&getBuyableAmount('f',22).gte(1)) return ["display-text","Next row of upgrades unlock at 15 allodoxaphobia."];
+            if (player[this.layer].total.lt(20)&&getBuyableAmount('f',22).gte(2)) return ["display-text","Next row of upgrades unlock at 20 allodoxaphobia."];
             return ["display-text","All upgrades unlocked!"]
         }},
         'blank',
