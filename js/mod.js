@@ -43,7 +43,8 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.a.total.gte(25)&&player.f.buyable[22].gte(2)
+	//return player.a.total.gte(25)&&player.f.buyable[22].gte(2)
+        return false
 }
 
 
