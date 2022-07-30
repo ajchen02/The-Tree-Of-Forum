@@ -19,15 +19,16 @@ addLayer("p", {
     exponentBase: n(0.5),
     mult: d10,
     getResetGain(){
-        //console.log(player.f.points.add(d1).div(this.mult).log(this.exponentBase))
-        if (tmp[this.layer].baseAmount.lt(10)) return d0
-        let current = tmp[this.layer].baseAmount.add(1).div(this.mult).pow(this.exponentBase).floor()
-        //log[exBase]((x+1)/20).floor+1
-        return current.mul(tmp[this.layer].gainMult).max(0) //.sub(player[this.layer].points).max(d0)
+        if (tmp[this.layer].baseAmount.lt(tmp[this.layer].requires)) return decimalZero
+		let gain = tmp[this.layer].baseAmount.div(tmp[this.layer].requires).pow(tmp[this.layer].exponent).times(tmp[this.layer].gainMult).pow(tmp[this.layer].gainExp)
+		if (gain.gte(tmp[this.layer].softcap)) gain = gain.pow(tmp[this.layer].softcapPower).times(tmp[this.layer].softcap.pow(decimalOne.sub(tmp[this.layer].softcapPower)))
+		gain = gain.times(tmp[this.layer].directMult)
+		return gain.floor().max(0);
+        //fuk--- i did not understand any of above, i just copy it from game.js
     },
     getNextAt(canMax=false){
         let current=tmp[this.layer].getResetGain//.add(player[this.layer].points)
-        return current.div(tmp[this.layer].gainMult).add(1).root(this.exponentBase).times(this.mult).floor()
+        return current.add(1).div(tmp[this.layer].gainMult).root(this.exponentBase).times(this.mult).floor()
     },
     canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
     prestigeButtonText(){ if (!tmp[this.layer].getResetGain.lte(100)) return 'Reset for <b>+'+format(tmp[this.layer].getResetGain,0)+'</b> prestige points'
