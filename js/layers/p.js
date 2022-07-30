@@ -22,7 +22,7 @@ addLayer("p", {
         if (tmp[this.layer].baseAmount.lt(tmp[this.layer].requires)) return decimalZero
 		let gain = tmp[this.layer].baseAmount.div(tmp[this.layer].mult).pow(tmp[this.layer].exponentBase).times(tmp[this.layer].gainMult).pow(tmp[this.layer].gainExp)
 		if (gain.gte(tmp[this.layer].softcap)) gain = gain.pow(tmp[this.layer].softcapPower).times(tmp[this.layer].softcap.pow(decimalOne.sub(tmp[this.layer].softcapPower)))
-		gain = gain.times(tmp[this.layer].directMult)// what the fuk is directMult
+		gain = gain.times(tmp[this.layer].directMult)// what the fuk is directMy
 		return gain.floor().max(0);
         //fuk--- i did not understand any of above, i just copy it from game.js
     },
