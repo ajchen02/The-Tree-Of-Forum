@@ -53,8 +53,13 @@ addLayer("p", {
     upgrades:{
         11: {
             name: "Point doubler",
-            description: "Double your point gain.",
+            description(){if (hasUpgrade('a',41)) return 'Not only Double your point gain, but also boost it with another '+format(upgradeEffect('a',41),0)+'x.'
+                return "Double your point gain."},
             cost: d1,
+            effect(){
+                if (hasUpgrade('a',41)) return d2.mul(upgradeEffect('a',41))
+                return d2
+            }
         },
         12: {
             name: "Point booster",
@@ -63,11 +68,12 @@ addLayer("p", {
             effect() {
                 //return hasUpgrade(this.layer,this.id)?player[this.layer].points.add(d1).sqrt().min(d5):player[this.layer].points.add(d1).sqrt()
                 if (!hasUpgrade(this.layer,this.id))return player[this.layer].points.add(d1).pow(2)
-                if (hasUpgrade('a',32))return player[this.layer].points.add(d1).pow(2).min(d5.add(upgradeEffect('a',32)))
+                if (hasUpgrade('a',42))return player[this.layer].points.add(d1).pow(2).min(d5.add(upgradeEffect('a',42)))
                 return player[this.layer].points.add(d1).pow(2).min(d5)
             },
             //tooltip:"(And a +1 output as Fawwaz Arkan suggest)",
-            tooltip(){return ((upgradeEffect(this.layer, this.id).eq(d5)&&hasUpgrade(this.layer,this.id))?'Sorry I forgor<br>Hardcapped at 5x<br>':'')+"Formula: x^2"},
+            tooltip(){if (hasUpgrade('a',42)) return 'Now i remember<br>Hardcapped at '+format(d5.add(upgradeEffect('a',42)),2)+'x<br>Formula: x^2'
+                return ((upgradeEffect(this.layer, this.id).eq(d5)&&hasUpgrade(this.layer,this.id))?'Sorry I forgor<br>Hardcapped at 5x<br>':'')+"Formula: x^2"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         13: {
@@ -75,9 +81,10 @@ addLayer("p", {
             description:'Boost point gain by point itself.',
             cost: d5,
             effect() {
+                if (hasUpgrade('a',43)) return player.points.max(d1).log(d10.sub(upgradeEffect('a',43))).max(d1)
                 return player.points.max(d1).log10().max(d1)
             },
-            tooltip:"Formula: Log10(x)",
+            tooltip(){return !hasUpgrade('a',43)?"Formula: Log10(x)":"Formula: Log"+format(d10.sub(upgradeEffect('a',43),2))+"(x)"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
         14: {
@@ -85,10 +92,11 @@ addLayer("p", {
             description:'Multiplies point gain based on last prestige reset gain.',
             cost: d10,
             effect() {
+                if (hasUpgrade('a',44)) return player[this.layer].best.max(1).log10().add(1).mul(2)
                 return player[this.layer].last.max(1).log10().add(1)
                 //Alternative return player[this.layer].last.max(1).root(2)
             },
-            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
+            tooltip(){return !hasUpgrade('a',44)?"Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1":"Best: "+format(player[this.layer].best,0)+"<br>Formula: (Log10(x)+1)*2"},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
             //style: { margin: "-100px" }
         },

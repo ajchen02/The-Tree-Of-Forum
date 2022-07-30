@@ -1,5 +1,9 @@
 
 let changelog = `<h1>Changelog:</h1><br>
+<br><h3>v0.20</h3><br>
+    - Added TWO new row of a upg.<br>
+    - NO banlance.<br>
+    - Fixed pow(0.5) issue... again<br>
 <br><h3>v0.16</h3><br>
     - Added something i forgor<br>
     - Some banlance.<br>

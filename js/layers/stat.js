@@ -5,7 +5,7 @@ function getPointGen() {
     
     let base = d1
     let pGain = d1
-    if (hasUpgrade('p',11)) pGain = pGain.times(d2)
+    if (hasUpgrade('p',11)) pGain = pGain.times(tmp.p.upgrades[11].effect)
     if (hasUpgrade('p',12)) pGain = pGain.times(tmp.p.upgrades[12].effect)
     if (hasUpgrade('p',13)) pGain = pGain.times(tmp.p.upgrades[13].effect)
     if (hasUpgrade('p',14)) pGain = pGain.times(tmp.p.upgrades[14].effect)

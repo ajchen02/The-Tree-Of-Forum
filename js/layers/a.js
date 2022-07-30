@@ -35,7 +35,7 @@ addLayer("a", {
         return this.exponentBase.pow(current).times(this.mult)
     },
     canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
-    prestigeButtonText(){return 'Reset for '+format(tmp[this.layer].getResetGain,0)+' '+tmp[this.layer].resource+'<br>Next at '+format(tmp[this.layer].getNextAt,0)+' prestige points<br>'+(
+    prestigeButtonText(){return 'Reset for <b>'+format(tmp[this.layer].getResetGain,0)+'</b> '+tmp[this.layer].resource+'<br>Next at '+format(tmp[this.layer].getNextAt,0)+' prestige points<br>'+(
         (tmp[this.layer].baseAmount.lte(0))?(format(0)):(format(Decimal.max(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt),tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt.mul(100))).mul(100))))
         +'% completed'//<br>('+format(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100))+'%, '+format(tmp[this.layer].baseAmount.max(1).log(tmp[this.layer].getNextAt).mul(100))+'%, '+format(Decimal.add(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100),format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))).div(2))+'%)'
     },                      
@@ -51,8 +51,11 @@ addLayer("a", {
         if (((hasUpgrade(this.layer,11)+hasUpgrade(this.layer,12)+hasUpgrade(this.layer,13)+hasUpgrade(this.layer,14))>=2)&&!hasAchievement('m',16)) limited.push(10)
         if ((hasUpgrade(this.layer,21)+hasUpgrade(this.layer,22)+hasUpgrade(this.layer,23)+hasUpgrade(this.layer,24))>=2) limited.push(20)
         if ((hasUpgrade(this.layer,31)+hasUpgrade(this.layer,32)+hasUpgrade(this.layer,33)+hasUpgrade(this.layer,34))>=2) limited.push(30)
+        if ((hasUpgrade(this.layer,41)+hasUpgrade(this.layer,42)+hasUpgrade(this.layer,43)+hasUpgrade(this.layer,44))>=2) limited.push(40)
         return limited
     },
+    autoPrestige(){ return hasUpgrade(this.layer,31)},
+    resetsNothing(){return hasUpgrade(this.layer,32)},
     upgrades: {
         11: {
             description:'Keep Prestige upgrade 11 when you does layer 2 reset.',
@@ -117,15 +120,42 @@ addLayer("a", {
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
         31: {
+            description:'Automatically reset allodoxaphobia.',
+            tooltip:'WARNING: This will reset whenever it can, so it might cause slower progress.',
+            cost: d6,
+            effect(){return player[this.layer].total.root(1.5).max(1)},
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
+            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
+        },
+        32: {
+            description:'allodoxaphobia doesn\'t reset anything.',
+            cost: d7,
+            canAfford(){return false},
+            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
+        },
+        33: {
+            description:'You can buy max milestones.',
+            cost: d8,
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
+            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
+        },
+        34: {
+            description:'milestones doesn\'t reset anything.',
+            cost: d9,
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
+            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
+        },
+        
+        41: {
             description:'Boost Prestige Upgrade 11.',
             cost: d7,
             effect(){return d2.mul(player.p.upgrades.length)},
             tooltip:'Effect: 2*(Amount of Prestige Upgrade you have)',
-            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
-            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(40)},
+            unlocked(){return player[this.layer].total.gte(20)&&getBuyableAmount('f',22).gte(2)},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
-        32: {
+        42: {
             description:'Boost Prestige upgrade 12.',
             cost: d7,
             effect(){
@@ -135,30 +165,29 @@ addLayer("a", {
                 //console.log('p: '+p+' m: '+m+' a: '+a)
                 return p.add(m).add(a).mul(2)
             },
-            tooltip:'Effect: increases prestige upgrade 2\'s hardcap based on p, m and a.',
-            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
-            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
-            effectDisplay() { return 'Pushed '+format(upgradeEffect(this.layer, this.id))+" further" },
+            tooltip:'Effect: increases prestige upgrade 12\'s hardcap based on p, m and a.',
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(40)},
+            unlocked(){return player[this.layer].total.gte(20)&&getBuyableAmount('f',22).gte(2)},
+            effectDisplay() { return '+'+format(upgradeEffect(this.layer, this.id)) },
         },
-        33: {
-            description:'Boost point gain.',
+        43: {
+            description:'Boost Prestige upgrade 13.',
             cost: d7,
-            effect(){return player[this.layer].total.root(1.5).max(1)},
-            tooltip:'Formula: 1.5√(total allodoxaphobia)',
-            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
-            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            effect(){return player.p.points.max(1).log10().min(8.8)},
+            tooltip(){return 'Effect: prestige upgrade 13\'s log is redused by prestige points.'+((upgradeEffect(this.layer,this.id).gte(8.8)&&hasUpgrade(this.layer,this.id))?'<br>Hardcapped at -8.8':'')},
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(40)},
+            unlocked(){return player[this.layer].total.gte(20)&&getBuyableAmount('f',22).gte(2)},
+            effectDisplay() { return '-'+format(upgradeEffect(this.layer, this.id)) },
         },
-        34: {
-            description:'Boost point gain.',
+        44: {
+            description:'Boost Prestige upgrade 14.',
             cost: d7,
-            effect(){return player[this.layer].total.root(1.5).max(1)},
-            tooltip:'Formula: 2*(haved allodoxaphobia upgrade amount)',
-            canAfford(){return !tmp[this.layer].upgradesLimition.includes(30)},
-            unlocked(){return player[this.layer].total.gte(15)&&getBuyableAmount('f',22).gte(1)},
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            effect: 'yes',
+            tooltip:'Effect: Double it\'s effect, and use best instead of total.',
+            canAfford(){return !tmp[this.layer].upgradesLimition.includes(40)},
+            unlocked(){return player[this.layer].total.gte(20)&&getBuyableAmount('f',22).gte(2)},
+            effectDisplay() { return format(d2)+"x" },
         },
-
     },
     clickables:{
         11: {

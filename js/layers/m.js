@@ -38,16 +38,16 @@ addLayer("m", {
     },
     canReset(){return tmp[this.layer].getResetGain.gte(1)?true:false},
     prestigeButtonText(){
-        if (/*Can Bulk Gain*/false) {return 'Reset for '+format(tmp[this.layer].getResetGain,0)+' '+tmp[this.layer].resource+'<br>Next at '+format(tmp[this.layer].getNextAt,0)+' prestige points'}
-        if (/*Can gain next*/tmp[this.layer].getResetGain.gte(1)) {return 'Reset for next '+tmp[this.layer].resource+'.'}
+        if (/*Can Bulk Gain*/hasUpgrade('a',33)) {return 'Reset for <b>'+format(tmp[this.layer].getResetGain,0)+'</b> '+tmp[this.layer].resource+'<br>Next at '+format(tmp[this.layer].getNextAt,0)+' prestige points'}
+        if (/*Can gain next*/tmp[this.layer].getResetGain.gte(1)) {return '<b>Reset for next '+tmp[this.layer].resource+'.</b>'}
         /*Can't gain next*/ return 'Next at '+format(tmp[this.layer].getNextAt,tmp[this.layer].getNextAt.gte('1e9')?2:null)+' prestige points.<br>Maybe '+(
         (tmp[this.layer].baseAmount.lte(0))?(format(0)):(format(Decimal.max(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt),tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt.mul(100))).mul(100))))
         +'% completed?<br>or '+
         format(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100))+'%, '+format(tmp[this.layer].baseAmount.max(1).log(tmp[this.layer].getNextAt).mul(100))+'%, '+format(Decimal.add(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100),format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))).div(2))+'%<br>'
         //+'It\'s very hard to predict an "pertenge" of this after all.'
         },
-    exponent: d2,                          
-    canBuyMax(){return false},
+    exponent: d2,        
+    resetsNothing(){return hasUpgrade('a',34)},                  
     prestigeNotify(){
         if (tmp[this.layer].getResetGain.gte(1)) return true
     },
