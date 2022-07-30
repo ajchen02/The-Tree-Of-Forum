@@ -10,17 +10,17 @@ addLayer("f", {
     branches:['m','a','p'],
     baseResource: "prestige point",         
     baseAmount() { return player.p.points },
-    layerShown() {return player[this.layer].unlocked||player.m.points.gte(10)||player.a.total.gte(15)||player.p.points.gte(1e5)},
+    layerShown() {return player[this.layer].unlocked||player.m.points.gte(9)||player.a.total.gte(11)||player.p.points.gte(1e4)},
 
-    requires: n(1e5),              
+    requires: n(1e4),              
     
     
     type: "custom",
     exponentBase: d2,
-    mult: n(1e5),
+    mult: n(1e4),
     getResetGain(){
         //console.log(player.f.points.add(d1).div(this.mult).log(this.exponentBase))
-        if (tmp[this.layer].baseAmount.lt(1e5)) return d0
+        if (tmp[this.layer].baseAmount.lt(1e4)) return d0
         current = tmp[this.layer].baseAmount.add(d1).div(this.mult).log(this.exponentBase).floor().add(d1)
         //log[exBase]((x+1)/20).floor+1
         return current.max(0) //.sub(player[this.layer].points).max(d0)

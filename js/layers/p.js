@@ -23,7 +23,7 @@ addLayer("p", {
         if (tmp[this.layer].baseAmount.lt(10)) return d0
         let current = tmp[this.layer].baseAmount.add(1).div(this.mult).pow(this.exponentBase).floor()
         //log[exBase]((x+1)/20).floor+1
-        return current.max(0) //.sub(player[this.layer].points).max(d0)
+        return current.mul(tmp[this.layer].gainMult).max(0) //.sub(player[this.layer].points).max(d0)
     },
     getNextAt(canMax=false){
         let current=tmp[this.layer].getResetGain//.add(player[this.layer].points)
