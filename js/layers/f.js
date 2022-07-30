@@ -10,7 +10,7 @@ addLayer("f", {
     branches:['m','a','p'],
     baseResource: "prestige point",         
     baseAmount() { return player.p.points },
-    layerShown() {return player[this.layer].unlocked||player.m.points.gte(10)||player.a.points.gte(15)||player.p.points.gte(1e5)},
+    layerShown() {return player[this.layer].unlocked||player.m.points.gte(10)||player.a.total.gte(15)||player.p.points.gte(1e5)},
 
     requires: n(1e5),              
     
