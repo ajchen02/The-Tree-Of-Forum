@@ -20,9 +20,9 @@ addLayer("p", {
     mult: d10,
     getResetGain(){
         if (tmp[this.layer].baseAmount.lt(tmp[this.layer].requires)) return decimalZero
-		let gain = tmp[this.layer].baseAmount.div(tmp[this.layer].requires).pow(tmp[this.layer].exponent).times(tmp[this.layer].gainMult).pow(tmp[this.layer].gainExp)
+		let gain = tmp[this.layer].baseAmount.div(tmp[this.layer].mult).pow(tmp[this.layer].exponentBase).times(tmp[this.layer].gainMult).pow(tmp[this.layer].gainExp)
 		if (gain.gte(tmp[this.layer].softcap)) gain = gain.pow(tmp[this.layer].softcapPower).times(tmp[this.layer].softcap.pow(decimalOne.sub(tmp[this.layer].softcapPower)))
-		gain = gain.times(tmp[this.layer].directMult)
+		gain = gain.times(tmp[this.layer].directMult)// what the fuk is directMult
 		return gain.floor().max(0);
         //fuk--- i did not understand any of above, i just copy it from game.js
     },
@@ -34,7 +34,6 @@ addLayer("p", {
     prestigeButtonText(){ if (!tmp[this.layer].getResetGain.lte(100)) return 'Reset for <b>+'+format(tmp[this.layer].getResetGain,0)+'</b> prestige points'
         return 'Reset for <b>+'+format(tmp[this.layer].getResetGain,0)+'</b> prestige points<br>Next at '+format(tmp[this.layer].getNextAt,0)+' points'},
 
-    exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         let mult = d1
         if (tmp.f.effect.gte(1)) mult = mult.times(tmp.f.effect)
