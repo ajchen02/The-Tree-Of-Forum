@@ -166,9 +166,10 @@ addLayer("p", {
         if (hasUpgrade('a',13)) keepUpgrades.push(13)
         if (hasUpgrade('a',14)) keepUpgrades.push(14)
         last=player[this.layer].last
+        best=player[this.layer].bestOneTime
         layerDataReset(this.layer)
         player[this.layer].upgrades=keepUpgrades
-        if (hasUpgrade('a',14)) player[this.layer].last=last
+        if (hasUpgrade('a',14)) {player[this.layer].last=last;player[this.layer].bestOneTime=best}
     },
     tabFormat: [
     "main-display",

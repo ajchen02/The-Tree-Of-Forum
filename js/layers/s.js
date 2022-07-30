@@ -25,7 +25,7 @@ addLayer("s", {
             direction: RIGHT,
             width: 400,
             height: 50,
-            display(){return 'W.I.P Sorry.'},
+            display(){return 'QwQe308 now i officially hate u.'},
             unlocked(){return true},
             progress() { return 0 },
             exp(){return tmp[this.layer][this.id]},
