@@ -7,6 +7,7 @@ addLayer("p", {
         unlocked: true,
 		points: d0,
         last: d0,
+        bestOneTime: d0,
     }},
     color: "#4BDC13",
     requires: d10, // Can be a function that takes requirement increases into account
@@ -47,7 +48,7 @@ addLayer("p", {
     ],
     onPrestige(gain) {
         //console.log(gain)
-        if (/*hasUpgrade('cyberpunk',2077)*/ false) {player[this.layer].last = player[this.layer].last.max(gain)}//Thanks, Jakub
+        if (hasUpgrade('a',44)) {player[this.layer].bestOneTime = player[this.layer].bestOneTime.max(gain)}
         else {player[this.layer].last=gain}
     },
     upgrades:{
@@ -92,7 +93,7 @@ addLayer("p", {
             description:'Multiplies point gain based on last prestige reset gain.',
             cost: d10,
             effect() {
-                if (hasUpgrade('a',44)) return player[this.layer].best.max(1).log10().add(1).mul(2)
+                if (hasUpgrade('a',44)) return player[this.layer].bestOneTime.max(1).log10().add(1).mul(2)
                 return player[this.layer].last.max(1).log10().add(1)
                 //Alternative return player[this.layer].last.max(1).root(2)
             },
