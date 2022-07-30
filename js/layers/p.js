@@ -27,7 +27,7 @@ addLayer("p", {
     },
     getNextAt(canMax=false){
         let current=tmp[this.layer].getResetGain//.add(player[this.layer].points)
-        return current.add(1).root(this.exponentBase).times(this.mult).floor()
+        return current.div(tmp[this.layer].gainMult).add(1).root(this.exponentBase).times(this.mult).floor()
     },
     canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
     prestigeButtonText(){ if (!tmp[this.layer].getResetGain.lte(100)) return 'Reset for <b>+'+format(tmp[this.layer].getResetGain,0)+'</b> prestige points'
