@@ -50,7 +50,8 @@ addLayer("m", {
     resetsNothing(){return hasUpgrade('a',34)},                  
     prestigeNotify(){
         if (tmp[this.layer].getResetGain.gte(1)) return true
-    },       
+    },
+    
 
     achievements: {
         11: {
