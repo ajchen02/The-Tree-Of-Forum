@@ -15,25 +15,11 @@ addLayer("p", {
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     
-    type: "custom",
+    type: "normal",
+    requires:d10,
+    exponent:n(0.5),
     exponentBase: n(0.5),
     mult: d10,
-    getResetGain(){
-        if (tmp[this.layer].baseAmount.lt(tmp[this.layer].requires)) return decimalZero
-		let gain = tmp[this.layer].baseAmount.div(tmp[this.layer].mult).pow(tmp[this.layer].exponentBase).times(tmp[this.layer].gainMult).pow(tmp[this.layer].gainExp)
-		if (gain.gte(tmp[this.layer].softcap)) gain = gain.pow(tmp[this.layer].softcapPower).times(tmp[this.layer].softcap.pow(decimalOne.sub(tmp[this.layer].softcapPower)))
-		gain = gain.times(tmp[this.layer].directMult)// what the fuk is directMy
-		return gain.floor().max(0);
-        //fuk--- i did not understand any of above, i just copy it from game.js
-    },
-    getNextAt(canMax=false){
-        let current=tmp[this.layer].getResetGain//.add(player[this.layer].points)
-        return current.add(1).div(tmp[this.layer].gainMult).root(this.exponentBase).times(this.mult).floor()
-    },
-    canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
-    prestigeButtonText(){ if (!tmp[this.layer].getResetGain.lte(100)) return 'Reset for <b>+'+format(tmp[this.layer].getResetGain,0)+'</b> prestige points'
-        return 'Reset for <b>+'+format(tmp[this.layer].getResetGain,0)+'</b> prestige points<br>Next at '+format(tmp[this.layer].getNextAt,0)+' points'},
-
     gainMult() { // Calculate the multiplier for main currency from bonuses
         let mult = d1
         if (tmp.f.effect.gte(1)) mult = mult.times(tmp.f.effect)
