@@ -50,18 +50,8 @@ addLayer("m", {
     resetsNothing(){return hasUpgrade('a',34)},                  
     prestigeNotify(){
         if (tmp[this.layer].getResetGain.gte(1)) return true
-    },
-    gainMult() {                            
-        return d1               
-    },
-    gainExp() {                             
-        return d1
-    },          
+    },       
 
-    upgrades: {
-    },
-    buyables: {
-    },
     achievements: {
         11: {
             name: "I Thought I'm Getting Milestones?",
