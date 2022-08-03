@@ -9,7 +9,7 @@ addLayer("p", {
         last: d0,
         bestOneTime: d0,
     }},
-    color: "#4BDC13",
+    color: "#32CD32",
     requires: d10, // Can be a function that takes requirement increases into account
     resource: "prestige points", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
@@ -34,6 +34,7 @@ addLayer("p", {
     ],
     onPrestige(gain) {
         //console.log(gain)
+        if (player.s.unlocked) console.log(format(gain))
         if (hasUpgrade('a',44)) {player[this.layer].bestOneTime = player[this.layer].bestOneTime.max(gain)}
         else {player[this.layer].last=gain}
     },

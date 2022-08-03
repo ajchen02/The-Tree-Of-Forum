@@ -51,7 +51,6 @@ addLayer("m", {
     prestigeNotify(){
         if (tmp[this.layer].getResetGain.gte(1)) return true
     },
-    
 
     achievements: {
         11: {
