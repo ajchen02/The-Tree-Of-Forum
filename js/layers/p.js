@@ -60,9 +60,9 @@ addLayer("p", {
                 return player[this.layer].points.add(d1).pow(2).min(d5)
             },
             //tooltip:"(And a +1 output as Fawwaz Arkan suggest)",
-            tooltip(){if (hasUpgrade('a',42)) return 'Now i remember<br>Hardcapped at '+format(d5.add(upgradeEffect('a',42)),2)+'x<br>Formula: x^2'
-                return ((upgradeEffect(this.layer, this.id).eq(d5)&&hasUpgrade(this.layer,this.id))?'Sorry I forgor<br>Hardcapped at 5x<br>':'')+"Formula: x^2"},
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            tooltip(){if (hasUpgrade('a',42)) return `Now i remember<br>Hardcap at ${format(d5.add(upgradeEffect('a',42)))}x<br>Formula: x^2`
+                return `${((upgradeEffect(this.layer, this.id).eq(d5)&&hasUpgrade(this.layer,this.id))?'Sorry I forgor<br>Hardcapped at 5x<br>':'')}Formula: x^2`},
+            effectDisplay() { return `${format(upgradeEffect(this.layer, this.id))}x` }, // Add formatting to the effect
         },
         13: {
             title:'ajchen',
@@ -72,8 +72,8 @@ addLayer("p", {
                 if (hasUpgrade('a',43)) return player.points.max(d1).log(d10.sub(upgradeEffect('a',43))).max(d1)
                 return player.points.max(d1).log10().max(d1)
             },
-            tooltip(){return !hasUpgrade('a',43)?"Formula: Log10(x)":"Formula: Log"+format(d10.sub(upgradeEffect('a',43),2))+"(x)"},
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            tooltip(){return !hasUpgrade('a',43)?"Formula: Log10(x)":`Formula: Log${format(d10.sub(upgradeEffect('a',43),2))}(x)`},
+            effectDisplay() { return `${format(upgradeEffect(this.layer, this.id))}x` },
         },
         14: {
             title:'Jakub',
@@ -84,65 +84,8 @@ addLayer("p", {
                 return player[this.layer].last.max(1).log10().add(1)
                 //Alternative return player[this.layer].last.max(1).root(2)
             },
-            tooltip(){return !hasUpgrade('a',44)?"Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1":"Best: "+format(player[this.layer].best,0)+"<br>Formula: (Log10(x)+1)*2"},
+            tooltip(){return !hasUpgrade('a',44)?`Last: ${format(player[this.layer].last,0)}<br>Formula: Log10(x)+1`:`Best: ${format(player[this.layer].best,0)}<br>Formula: (Log10(x)+1)*2`},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
-            //style: { margin: "-100px" }
-        },
-        21: {
-            title:'QwQe308',
-            description:'Boost first upgrade.',
-            cost: d10,
-            effect() {
-                return player[this.layer].last.max(1).log10().add(1)
-                //Alternative return player[this.layer].last.max(1).root(2)
-            },
-            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
-            unlocked(){
-                return getBuyableAmount('f',11).gte(1)
-            }
-        },
-        22: {
-            title:'QwQe308',
-            description:'Boost ← upgrade.',
-            cost: d10,
-            effect() {
-                return player[this.layer].last.max(1).log10().add(1)
-                //Alternative return player[this.layer].last.max(1).root(2)
-            },
-            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
-            unlocked(){
-                return getBuyableAmount('f',11).gte(2)
-            }
-        },
-        23: {
-            title:'QwQe308',
-            description:'Boost ← upgrade.',
-            cost: d10,
-            effect() {
-                return player[this.layer].last.max(1).log10().add(1)
-                //Alternative return player[this.layer].last.max(1).root(2)
-            },
-            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
-            unlocked(){
-                return getBuyableAmount('f',11).gte(3)
-            }
-        },
-        24: {
-            title:'QwQe308',
-            description:'Boost ← upgrade.',
-            cost: d10,
-            effect() {
-                return player[this.layer].last.max(1).log10().add(1)
-                //Alternative return player[this.layer].last.max(1).root(2)
-            },
-            tooltip(){return "Last: "+format(player[this.layer].last,0)+"<br>Formula: Log10(x)+1"},
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
-            unlocked(){
-                return getBuyableAmount('f',11).gte(4)
-            }
         },
     },
     doReset(resettingLayer) {

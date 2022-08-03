@@ -56,7 +56,7 @@ addLayer("m", {
         11: {
             name: "I Thought I'm Getting Milestones?",
             done() { return player[this.layer].points.gte(1) },
-            tooltip(){return 'Milestones take too many spaces...<br>Currently: Boost point gain by '+format(tmp.m.achievements[11].effect)+'x.'},
+            tooltip(){return `Milestones take too many spaces...<br>Currently: Boost point gain by ${format(tmp.m.achievements[11].effect)}x.`},
             effect() {if (hasAchievement('m',11)) return d2.mul(tmp.m.achievements[12].effect).mul(tmp.m.achievements[14].effect); else return d1},
         },
         12: {
@@ -64,7 +64,7 @@ addLayer("m", {
             name: "The Second Achievement.",
             done() { return player[this.layer].points.gte(2) },
             goalTooltip:'Just Get 2 Milestones, cmon that is easy.',
-            doneTooltip(){return 'Boost the first achievement by 1.25x PER MILESTONES.<br>'+'Currently: '+format(tmp.m.achievements[12].effect)+'x.'},
+            doneTooltip(){return `Boost the first achievement by 1.25x PER MILESTONES.<br>Currently: ${format(tmp.m.achievements[12].effect)}x.`},
             effect() {if (hasAchievement('m',12)) return n(1.25).pow(player[this.layer].points.max(1)); else return d1},
         },
         13: {
@@ -81,7 +81,7 @@ addLayer("m", {
             name: "I'M RUNNING OUT OF NAMES!!!",
             done() { return player[this.layer].points.gte(5) },
             goalTooltip:'Get 5 Milestones.<br>Really.',
-            doneTooltip(){return 'Boost the first achievement by 1.5x PER ACHIEVEMENTS.<br>'+'Currently: '+format(tmp.m.achievements[14].effect)+'x.'},
+            doneTooltip(){return `Boost the first achievement by 1.5x PER ACHIEVEMENTS.<br>Currently: ${format(tmp.m.achievements[14].effect)}x.`},
             effect() {if (hasAchievement('m',14)) return n(1.5).pow(player[this.layer].achievements.length).max(1); else return d1},
         },
         15: {
