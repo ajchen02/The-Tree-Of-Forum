@@ -88,9 +88,6 @@ addLayer("p", {
             tooltip(){return !hasUpgrade('a',44)?`Last: ${format(player[this.layer].last,0)}<br>Formula: Log10(x)+1`:`Best: ${format(player[this.layer].best,0)}<br>Formula: (Log10(x)+1)*2`},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
-        21:{
-            
-        }
     },
     doReset(resettingLayer) {
         if (resettingLayer==this.layer||!(inBranch(this.layer,resettingLayer))) return;
