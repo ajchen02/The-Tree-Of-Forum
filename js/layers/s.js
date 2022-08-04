@@ -43,7 +43,7 @@ addLayer("s", {
              },
             fillStyle: {"background-color":layers.p.color},
             //addExp(){if (true) pass},
-            level(){return getSkillExp(this.id)[0].div(10).log(2)},
+            level(){return getSkillExp(this.id)[0].max(1).div(10).log(2).max(1)},
             getNextAt(){return getSkillLevel(this.id)[0].add(1).pow(2).times(10)},
             effect(){return n(1.1).pow(getSkillLevel(this.id)[0])},
         },
