@@ -69,7 +69,7 @@ function fixOldSave(oldVersion){
 		player.f.unlocked=false
 	}
 	if (oldVersion <= 0.211)
-		player.p.points=player.p.points.max(1000)
-		player.f.points=player.f.points.max(20)
+		player.p.points=player.p.points.min(1000)
+		player.f.points=player.f.points.min(20)
 		layerDataReset('s')
 }
