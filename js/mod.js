@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.21",
+	num: "0.211",
 	name: "Profectus is so hard",
 }
 
@@ -68,4 +68,7 @@ function fixOldSave(oldVersion){
 		player.f.points = n(0)
 		player.f.unlocked=false
 	}
+	if (oldVersion < 0.21)
+		player.p.points=d0
+		layerDataReset('s')
 }
