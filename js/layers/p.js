@@ -23,6 +23,7 @@ addLayer("p", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         let mult = d1
         if (tmp.f.effect.gte(1)) mult = mult.times(tmp.f.effect)
+        if (tmp.s.bars.p.unlocked) mult = mult.times(getSkillEffect('p'))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -34,14 +35,14 @@ addLayer("p", {
     ],
     onPrestige(gain) {
         //console.log(gain)
-        if (player.s.unlocked) console.log(format(gain))
+        if (tmp.s.bars.p.unlocked) addSkillExp('p',gain)
         if (hasUpgrade('a',44)) {player[this.layer].bestOneTime = player[this.layer].bestOneTime.max(gain)}
         else {player[this.layer].last=gain}
     },
     upgrades:{
         11: {
             name: "Point doubler",
-            description(){if (hasUpgrade('a',41)) return 'Not only Double your point gain, but also boost it with another '+format(upgradeEffect('a',41),0)+'x.'
+            description(){if (hasUpgrade('a',41)) return `Not only Double your point gain, but also boost it with another ${format(upgradeEffect('a',41),0)}x.`
                 return "Double your point gain."},
             cost: d1,
             effect(){

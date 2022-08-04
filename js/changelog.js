@@ -1,5 +1,8 @@
 
 let changelog = `<h1>Changelog:</h1><br>
+<br><h3>v0.21</h3><br>
+    - Added Skills.<br>
+    - Some performance improvements.<br>
 <br><h3>v0.20</h3><br>
     - Added TWO new row of a upg.<br>
     - NO banlance.<br>

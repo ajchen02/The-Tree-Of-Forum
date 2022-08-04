@@ -3,9 +3,11 @@ function getEXPeff(id){return layers.exp.bars[id].effect()}
 function getSkillLevel(id){return layers.exp.bars[id].level()}
 function giveEXP(id,input = n(0)){player.exp[id]=player.exp[id].add(layers.exp.bars[id].gain(false,input))}
 */
-function getSkillExp(id){return player.s.exps[id]}
-function getSkillLevel(id){return tmp.s.bars[id].level}
+function getSkillExp(id){return [player.s.exps[id],tmp.s.bars[id].getNextAt]}
+function getSkillLevel(id){return [tmp.s.bars[id].level.floor(),tmp.s.bars[id].level]}
+function getSkillEffect(id){return tmp.s.bars[id].effect}
 function setSkillExp(id,input=d0){player.s.exps[id]=n(input)}
+function addSkillExp(id,input=d0){player.s.exps[id]=player.s.exps[id].add(input)}
 addLayer("s", {
     name: "skills", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "S", // This appears on the layer's node. Default is the id with the first letter capitalized
@@ -25,11 +27,12 @@ addLayer("s", {
     bars:{
         p: {
             direction: RIGHT,
-            width: 400,
+            width: 450,
             height: 50,
-            display(){return '这个条看起来<br>怎么样？'},
+            display(){return `Prestige: level ${getSkillLevel(this.id)[0]}, boosting prestige points by ${format(getSkillEffect(this.id))}x.<br>
+                            exp:${format(getSkillExp(this.id)[0],0)}/${format(getSkillExp(this.id)[1],0)}, gain by prestige`},
             unlocked(){return true},
-            progress() { return tmp.s.bars[this.id].level.sub(tmp.s.bars[this.id].level.floor()) },
+            progress() { return getSkillLevel(this.id)[1].sub(getSkillLevel(this.id)[0]) },
             textStyle:{
                  'background': layers.p.color,
                  'border-radius':'5px',
@@ -37,12 +40,15 @@ addLayer("s", {
              },
             fillStyle: {"background-color":layers.p.color},
             //exp(){player.s.exps[this.layer]=player.s.exps[this.layer].add(0.1)},
-            level(){return player.s.exps[this.id].div(10).root(2)},
-            effect(){return tmp.s.bars[this.id].level.floor().pow(1.1)},
+            level(){return getSkillExp(this.id)[0].div(10).root(2)},
+            getNextAt(){return getSkillLevel(this.id)[0].add(1).pow(2).times(10)},
+            effect(){return n(1.1).pow(getSkillLevel(this.id)[0])},
         },
     },
     tabFormat: [
         //"main-display",
+        ["display-text",'this layer normally don\'t reset.',],
+
         ['bar','p'],
         //"clickables",
     ],

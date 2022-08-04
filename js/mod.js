@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.20",
+	num: "0.21",
 	name: "Profectus is so hard",
 }
 
