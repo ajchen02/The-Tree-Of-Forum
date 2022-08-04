@@ -114,7 +114,7 @@ addLayer("m", {
         ],
     doReset(resettingLayer) {
         if (resettingLayer==this.layer||!(inBranch(this.layer,resettingLayer))) return;
-        if (hasAchievement('m',13)) keepM13=true; else keepM13=false
+        if (hasAchievement('m',13)) {keepM13=true;player.s.unlocked=true} else keepM13=false
         layerDataReset(this.layer)
         if (keepM13) player[this.layer].achievements.push(13)
     },

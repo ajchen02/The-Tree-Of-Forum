@@ -24,9 +24,9 @@ addLayer("s", {
     type: "none", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     row: "side", // Row the layer is in on the tree (0 is the first row)
     layerShown(){return player[this.layer].unlocked},
-    update(diff){
-        if ()
-    },
+/*    update(diff){
+        if (player[this.layer].bars.p.unlocked){addSkillExp('p',input=d0)}
+    },*/
     bars:{
         p: {
             direction: RIGHT,
