@@ -47,7 +47,7 @@ addLayer("f", {
         return player.f.points.root(d2).add(1)
     },
     effectDescription(){
-        return `'<br>They are boosting your prestige point gain by ${format(this.effect())}x`
+        return `<br>They are boosting your prestige point gain by ${format(this.effect())}x`
     },
 
     upgrades: {
@@ -63,7 +63,7 @@ addLayer("f", {
             display() { 
                 return `Unlock upgrades in prestige layer.<br><br>
                     Currently: unlocked ${format(getBuyableAmount(this.layer, this.id),0)} upgrades.<br><br>
-                    Cost:'${(getBuyableAmount(this.layer, this.id).gte(tmp[this.layer].buyables[this.id].purchaseLimit)?"MAXED":(`${format(this.cost(),0)} fruits<br>`))}`
+                    Cost:${(getBuyableAmount(this.layer, this.id).gte(tmp[this.layer].buyables[this.id].purchaseLimit)?"MAXED":(`${format(this.cost(),0)} fruits<br>`))}`
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
             buy() {
@@ -80,7 +80,7 @@ addLayer("f", {
             display() { 
                 return `Unlock achievements in milestone layer.<br><br>
                     Currently: unlocked ${format(getBuyableAmount(this.layer, this.id),0)} milestones.<br><br>
-                    Cost:'${(getBuyableAmount(this.layer, this.id).gte(tmp[this.layer].buyables[this.id].purchaseLimit)?"MAXED":(`${format(this.cost(),0)} fruits<br>`))}`
+                    Cost:${(getBuyableAmount(this.layer, this.id).gte(tmp[this.layer].buyables[this.id].purchaseLimit)?"MAXED":(`${format(this.cost(),0)} fruits<br>`))}`
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
             buy() {
@@ -97,7 +97,7 @@ addLayer("f", {
             display() { 
                 return `Unlock rows of upgrades in allodoxaphobia layer.<br><br>
                     Currently: unlocked ${format(getBuyableAmount(this.layer, this.id),0)} new achievement rows.<br><br>
-                    Cost:'${(getBuyableAmount(this.layer, this.id).gte(tmp[this.layer].buyables[this.id].purchaseLimit)?"MAXED":(`${format(this.cost(),0)} fruits<br>`))}`
+                    Cost:${(getBuyableAmount(this.layer, this.id).gte(tmp[this.layer].buyables[this.id].purchaseLimit)?"MAXED":(`${format(this.cost(),0)} fruits<br>`))}`
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
             buy() {

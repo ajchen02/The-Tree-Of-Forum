@@ -41,10 +41,10 @@ addLayer("stat", {
         content:["blank",
         ["display-text",function(){
             words=''
-            if (player.p.unlocked){words+='Prestige layer has boost your point gain by '+format(tmp.moreGen.p)+'x ('+format(tmp.moreGen.p.log(tmp.pointGen).mul(100))+'%)<br>'}
-            if (player.m.unlocked){words+='Milestone layer boost has your point gain by '+format(tmp.moreGen.m)+'x ('+format(tmp.moreGen.m.log(tmp.pointGen).mul(100))+'%)<br>'}
-            if (player.a.unlocked){words+='Allodoxaphobia layer has boost your point gain by '+format(tmp.moreGen.a)+'x ('+format(tmp.moreGen.a.log(tmp.pointGen).mul(100))+'%)<br>'}
-            if (player.f.unlocked){words+='Fruits layer has boost your point gain by '+format(tmp.moreGen.f)+'x ('+format(tmp.moreGen.f.log(tmp.pointGen).mul(100))+'%)<br>'}
+            if (player.p.unlocked){words+=`Prestige layer has boost your point gain by ${format(tmp.moreGen.p)}x (${format(tmp.moreGen.p.log(tmp.pointGen).mul(100))}%)<br>`}
+            if (player.m.unlocked){words+=`Milestone layer boost has your point gain by ${format(tmp.moreGen.m)}x (${format(tmp.moreGen.m.log(tmp.pointGen).mul(100))}%)<br>`}
+            if (player.a.unlocked){words+=`Allodoxaphobia layer has boost your point gain by ${format(tmp.moreGen.a)}x (${format(tmp.moreGen.a.log(tmp.pointGen).mul(100))}%)<br>`}
+            if (player.f.unlocked){words+=`Fruits layer has boost your point gain by ${format(tmp.moreGen.f)}x (${format(tmp.moreGen.f.log(tmp.pointGen).mul(100))}%)<br>`}
             return words
         }],
         /*["display-image", 'https://i.postimg.cc/j2CyG6hQ/Screenshot-2022-07-24-114647.jpg',{ height: '400px', width: '1600px', position: 'relative', right: '-250px', top: '-1000px'}],
@@ -56,7 +56,8 @@ addLayer("stat", {
         content:["blank",
         ["display-text",function(){
             words=''
-            if (player.f.unlocked){words+='Fruits layer: '+format(tmp.f.effect)+'x<br>'}
+            if (player.f.unlocked){words+=`Fruits layer: ${format(tmp.f.effect)}x<br>`}
+            if (tmp.s.bars.p.unlocked){words+=`Skill: ${format(getSkillEffect('p'))}x<br>`}
             return words
         }],],
         unlocked(){return player.f.unlocked},

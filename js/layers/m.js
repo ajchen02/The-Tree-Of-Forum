@@ -69,9 +69,9 @@ addLayer("m", {
             effect() {if (hasAchievement('m',12)) return n(1.25).pow(player[this.layer].points.max(1)); else return d1},
         },
         13: {
-            unlocked(){return (hasAchievement('m',12)&&getBuyableAmount('f',21).gte(2))||player.s.unlocked},
+            unlocked(){return hasAchievement('m',12)||player.s.unlocked},
             name: "Skills",
-            done() { return (player[this.layer].points.gte(3)&&getBuyableAmount('f',21).gte(2))||player.s.unlocked},
+            done() { return player[this.layer].points.gte(3)||player.s.unlocked},
             goalTooltip:'Get 3 Milestones.<br>You have the skill to do this.',
             doneTooltip(){return 'Unlock skills layer.'},
             onComplete(){player.s.unlocked=true},
@@ -114,7 +114,7 @@ addLayer("m", {
             
         ],
     doReset(resettingLayer) {
-        if (resettingLayer==this.layer||!(inBranch(this.layer,resettingLayer))) {player.s.unlocked=true;return;}
+        if (resettingLayer==this.layer||!(inBranch(this.layer,resettingLayer))) return;
         if (hasAchievement('m',13)) {keepM13=true;player.s.unlocked=true} 
             else keepM13=false
         layerDataReset(this.layer)
