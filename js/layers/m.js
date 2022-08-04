@@ -30,7 +30,8 @@ addLayer("m", {
         if (tmp[this.layer].baseAmount.lt(tmp[this.layer].requires)) return d0
         current = tmp[this.layer].baseAmount.div(this.mult).max(1).log(this.exponentBase).floor().add(1)
         if (tmp[this.layer].canBuyMax) return current.sub(player[this.layer].points).max(0)
-        return current.sub(player[this.layer].points).max(0).min(1)
+        if (!hasUpgrade('a',33)) return current.sub(player[this.layer].points).max(0).min(1)
+        else return current.sub(player[this.layer].points).max(0)
     },
     getNextAt(canMax=false){
         let current=tmp[this.layer].getResetGain.add(player[this.layer].points)
