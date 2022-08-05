@@ -35,8 +35,8 @@ addLayer("a", {
         return this.exponentBase.pow(current).times(this.mult)
     },
     canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
-    prestigeButtonText(){return `Reset for <b>${format(tmp[this.layer].getResetGain,0)}</b> ${tmp[this.layer].resource}<br>Next at ${format(tmp[this.layer].getNextAt,0)} prestige points<br>${(
-        (tmp[this.layer].baseAmount.lte(0))?(format(0)):(format(Decimal.max(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt),tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt.mul(100))).mul(100))))}% completed`//<br>('+format(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100))+'%, '+format(tmp[this.layer].baseAmount.max(1).log(tmp[this.layer].getNextAt).mul(100))+'%, '+format(Decimal.add(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100),format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))).div(2))+'%)'
+    prestigeButtonText(){return `Reset for <b>${format(tmp[this.layer].getResetGain,0)}</b> ${tmp[this.layer].resource}<br>Next at ${format(tmp[this.layer].getNextAt)} prestige points<br>${(
+        (tmp[this.layer].baseAmount.lte(0))?(format(0)):(format(Decimal.max(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt),tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt.mul(100))).mul(100))))}% completed`
     },                      
     canBuyMax(){return true},
     gainMult() {                            

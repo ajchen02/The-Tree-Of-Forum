@@ -30,7 +30,7 @@ addLayer("f", {
         return this.exponentBase.pow(current).times(this.mult)
     },
     canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
-    prestigeButtonText(){return `Reset for ${format(tmp[this.layer].getResetGain,0)} fruits<br>Next at ${format(tmp[this.layer].getNextAt,0)} prestige points`},
+    prestigeButtonText(){return `Reset for ${format(tmp[this.layer].getResetGain,0)} fruits<br>Next at ${format(tmp[this.layer].getNextAt)} prestige points`},
     exponent: d2,                          
     canBuyMax(){return true},
     gainMult() {                            

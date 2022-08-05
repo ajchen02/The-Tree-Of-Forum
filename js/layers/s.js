@@ -33,7 +33,7 @@ addLayer("s", {
             width: 450,
             height: 50,
             display(){return `Prestige: level ${getSkillLevel(this.id)[0]}, boosting prestige points by ${format(getSkillEffect(this.id))}x.<br>
-                            exp:${format(getSkillExp(this.id)[0],0)}/${format(getSkillExp(this.id)[1],0)}, gain by prestige`},
+                            exp:${format(getSkillExp(this.id)[0],getSkillExp(this.id)[0].gte(1e9)?2:0)}/${format(getSkillExp(this.id)[1],getSkillExp(this.id)[1].gte(1e9)?2:0)}, gain by prestige`},
             unlocked(){return player[this.layer].unlocked},
             progress() { return getSkillLevel(this.id)[1].sub(getSkillLevel(this.id)[0]) },
             textStyle:{
