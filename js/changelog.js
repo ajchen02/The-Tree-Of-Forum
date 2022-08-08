@@ -1,5 +1,9 @@
 
 let changelog = `<h1>Changelog:</h1><br>
+<br><h3>v0.23</h3><br>
+    - Added one row of upgrade in prestige.<br>
+    - Added SUPER BOOSTER.<br>
+    - A LOT banlance.
 <br><h3>v0.21</h3><br>
     - Added Skills.<br>
     - Some performance improvements.<br>
