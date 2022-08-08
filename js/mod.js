@@ -3,7 +3,7 @@ let modInfo = {
 	id: "TTOF_AjchenPath",
 	author: "TMT community",
 	pointsName: "points",
-	modFiles: ["layers/p.js","layers/m.js","layers/a.js","layers/f.js","layers/s.js","layers/stat.js",		"tree.js",'changelog.js'],
+	modFiles: ["layers/p.js","layers/m.js","layers/a.js","layers/f.js","layers/s.js","layers/sb.js","layers/stat.js",		"tree.js",'changelog.js'],
 
 	discordName: "Forum Link",
 	discordLink: "https://forums.moddingtree.com/t/the-tree-of-forum-vote-area/599",
@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.213",
+	num: "0.23",
 	name: "Profectus is so hard",
 }
 
@@ -22,7 +22,7 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ['inBranch',"blowUpEverything"]
+var doNotCallTheseFunctionsEveryTick = ['keepingUpgrades','pointRefresh',"blowUpEverything"]
 
 function getStartPoints(){
     return n(modInfo.initialStartPoints)
@@ -43,7 +43,6 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	//return player.a.total.gte(25)&&player.f.buyable[22].gte(2)
         return false
 }
 

@@ -18,8 +18,10 @@ function getPointGen() {
     if (hasUpgrade('a',23)) aGain = aGain.mul(tmp.a.upgrades[23].effect)    
     if (hasUpgrade('a',24)) aGain = aGain.mul(tmp.a.upgrades[24].effect)
     let fGain = d1
+    let sbGain = d1
+    if (tmp.sb.effect.gte(1)) sbGain = sbGain.times(tmp.sb.effect)
     //if (tmp.f.effect.gte(1)) fGain = fGain.times(tmp.f.effect)
-	return {total:base.times(pGain).mul(mGain).mul(aGain).times(fGain),p:pGain,m:mGain,a:aGain,f:fGain}
+	return {total:base.times(pGain).mul(mGain).mul(aGain).times(fGain).mul(sbGain),p:pGain,m:mGain,a:aGain,f:fGain,sb:sbGain}
 }
 
 addLayer("stat", {
@@ -45,6 +47,7 @@ addLayer("stat", {
             if (player.m.unlocked){words+=`Milestone layer boost has your point gain by ${format(tmp.moreGen.m)}x (${format(tmp.moreGen.m.log(tmp.pointGen).mul(100))}%)<br>`}
             if (player.a.unlocked){words+=`Allodoxaphobia layer has boost your point gain by ${format(tmp.moreGen.a)}x (${format(tmp.moreGen.a.log(tmp.pointGen).mul(100))}%)<br>`}
             if (player.f.unlocked){words+=`Fruits layer has boost your point gain by ${format(tmp.moreGen.f)}x (${format(tmp.moreGen.f.log(tmp.pointGen).mul(100))}%)<br>`}
+            if (player.sb.unlocked){words+=`Super boosters has boost your point gain by ${format(tmp.moreGen.sb)}x (${format(tmp.moreGen.sb.log(tmp.pointGen).mul(100))}%)<br>`}
             return words
         }],
         /*["display-image", 'https://i.postimg.cc/j2CyG6hQ/Screenshot-2022-07-24-114647.jpg',{ height: '400px', width: '1600px', position: 'relative', right: '-250px', top: '-1000px'}],

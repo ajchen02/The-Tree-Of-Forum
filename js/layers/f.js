@@ -4,9 +4,10 @@ addLayer("f", {
         points: d0,             
     }},
 
-    color: "#ADFF2F",                       
+    color: "#ADFF2F",
     resource: "fruits",            
-    row: 3,                                 
+    row: 3,   
+    position:1,                              
     branches:['m','a','p'],
     baseResource: "prestige point",         
     baseAmount() { return player.p.points },
@@ -14,7 +15,7 @@ addLayer("f", {
 
     requires: n(1e4),              
     
-    
+
     type: "custom",
     exponentBase: d2,
     mult: n(1e4),
@@ -31,18 +32,7 @@ addLayer("f", {
     },
     canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
     prestigeButtonText(){return `Reset for ${format(tmp[this.layer].getResetGain,0)} fruits<br>Next at ${format(tmp[this.layer].getNextAt)} prestige points`},
-    exponent: d2,                          
     canBuyMax(){return true},
-    gainMult() {                            
-        return d1               
-    },
-    gainExp() {                             
-        return d1
-    },
-    doReset(resettingLayer) {
-        if (resettingLayer==this.layer) {player.m.unlocked=false;player.a.unlocked=false;return;}
-        layerDataReset(this.layer)
-    },
     effect(){
         return player.f.points.root(d2).add(1)
     },
@@ -57,7 +47,7 @@ addLayer("f", {
         11: {
             title:'upvoid',
             purchaseLimit(){
-                return /*d4*/d0
+                return /*d4*/d3
             },
             cost(x) { return d1.mul(x.add(1)) },
             display() { 
@@ -74,12 +64,12 @@ addLayer("f", {
         21: {
             title:'upvoid',
             purchaseLimit(){
-                return d2
+                return d3
             },
             cost(x) { return d3.pow(x.add(1)) },
             display() { 
                 return `Unlock achievements in milestone layer.<br><br>
-                    Currently: unlocked ${format(getBuyableAmount(this.layer, this.id),0)} milestones.<br><br>
+                    Currently: unlocked ${format(getBuyableAmount(this.layer, this.id),0)} achievements.<br><br>
                     Cost:${(getBuyableAmount(this.layer, this.id).gte(tmp[this.layer].buyables[this.id].purchaseLimit)?"MAXED":(`${format(this.cost(),0)} fruits<br>`))}`
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
@@ -96,7 +86,8 @@ addLayer("f", {
             cost(x) { return d3.pow(x.add(1)) },
             display() { 
                 return `Unlock rows of upgrades in allodoxaphobia layer.<br><br>
-                    Currently: unlocked ${format(getBuyableAmount(this.layer, this.id),0)} new achievement rows.<br><br>
+                    Currently: unlocked ${format(getBuyableAmount(this.layer, this.id),0)} rows of upgrades.
+                    ${getBuyableAmount(this.layer, this.id).gte(2)?`it also keeping your first ${format(getBuyableAmount(this.layer, this.id).sub(1),0)} row of upgrades.`:''}<br><br>
                     Cost:${(getBuyableAmount(this.layer, this.id).gte(tmp[this.layer].buyables[this.id].purchaseLimit)?"MAXED":(`${format(this.cost(),0)} fruits<br>`))}`
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },

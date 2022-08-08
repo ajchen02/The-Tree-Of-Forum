@@ -15,7 +15,7 @@ addLayer("s", {
     startData() { return {
         unlocked: false,
 		points:d0,
-        exps:{p:d0}
+        exps:{p:d0,a:d0}
     }},
     color: "white",
     tooltip:"Skills",
@@ -24,9 +24,11 @@ addLayer("s", {
     type: "none", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     row: "side", // Row the layer is in on the tree (0 is the first row)
     layerShown(){return player[this.layer].unlocked},
+
     update(diff){
         if (tmp[this.layer].bars.p.unlocked){addSkillExp('p',tmp.p.resetGain.mul(diff).mul(tmp.p.passiveGeneration))}
     },
+
     bars:{
         p: {
             direction: RIGHT,
@@ -47,12 +49,32 @@ addLayer("s", {
             getNextAt(){return n(2).pow(getSkillLevel(this.id)[0].add(1)).mul(10)},
             effect(){return n(1.1).pow(getSkillLevel(this.id)[0])},
         },
+        a: {
+            direction: RIGHT,
+            width: 450,
+            height: 50,
+            display(){return `Allodoxaphobia: level ${getSkillLevel(this.id)[0]}, Adding allodoxaphobia by +${format(getSkillEffect(this.id),0)}.<br>
+                            exp:${format(getSkillExp(this.id)[0],getSkillExp(this.id)[0].gte(1e9)?2:0)}/${format(getSkillExp(this.id)[1],getSkillExp(this.id)[1].gte(1e9)?2:0)}, but they can only buy upgrades`},
+            unlocked(){return false},
+            progress() { return getSkillLevel(this.id)[1].sub(getSkillLevel(this.id)[0]) },
+            textStyle:{
+                 'background': layers.a.color,
+                 'border-radius':'5px',
+                 'color': 'black',
+             },
+            fillStyle: {"background-color":layers.a.color},
+            //addExp(){if (true) pass},
+            level(){return getSkillExp(this.id)[0].max(1).log(1.5).max(0)},
+            getNextAt(){return n(1.5).pow(getSkillLevel(this.id)[0].add(1))},
+            effect(){return getSkillLevel(this.id)[0]},
+        },
     },
     tabFormat: [
         //"main-display",
         ["display-text",'this layer normally don\'t reset.',],
 
         ['bar','p'],
+        ['bar','a'],
         //"clickables",
     ],
     

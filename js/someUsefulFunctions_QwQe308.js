@@ -16,7 +16,12 @@ function n(num){
 }
 //检测节点是否连接
 function inBranch(node,layer){
-    return layers[layer].branches.includes(node)
+    if (node==layer) return true
+    if (layers[layer].branches.length==0||layers[layer].branches===undefined) return false
+    if (layers[layer].branches.includes(node)) return true
+    let count=0
+    for (i of layers[layer].branches){count+=inBranch(node,i)}
+    return Boolean(count)
 }
 /*
 //检测旁边的升级是否被购买

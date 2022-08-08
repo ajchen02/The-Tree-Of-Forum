@@ -1,20 +1,22 @@
 addLayer("p", {
-    name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
-    row:1,
-    symbol: "P", // This appears on the layer's node. Default is the id with the first letter capitalized
-    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: true,
 		points: d0,
         last: d0,
         bestOneTime: d0,
     }},
+
+    name: "prestige",
+    row:1,
+    symbol: "P",
+    position: 0,
     color: "#32CD32",
-    requires: d10, // Can be a function that takes requirement increases into account
-    resource: "prestige points", // Name of prestige currency
+    requires: d10, 
+    resource: "prestige points",
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
-    
+    branches:[],
+
     type: "normal",
     requires:d10,
     exponent:n(0.5),
@@ -78,19 +80,49 @@ addLayer("p", {
         },
         14: {
             title:'Jakub',
-            description:'Multiplies point gain based on last prestige reset gain.',
+            description:'Multiplies point gain by last prestige gain.',
             cost: d10,
-            effect() {
-                if (hasUpgrade('a',44)) return player[this.layer].bestOneTime.max(1).log10().add(1).mul(2)
-                return player[this.layer].last.max(1).log10().add(1)
-                //Alternative return player[this.layer].last.max(1).root(2)
+            baseEffect(){
+                return !hasUpgrade('a',44)?player[this.layer].last.max(1).log10().add(1):player[this.layer].bestOneTime.max(1).log10().add(1)
             },
-            tooltip(){return !hasUpgrade('a',44)?`Last: ${format(player[this.layer].last,0)}<br>Formula: Log10(x)+1`:`Best: ${format(player[this.layer].best,0)}<br>Formula: (Log10(x)+1)*2`},
+            effect() {return hasUpgrade('p',21)?tmp[this.layer].upgrades[this.id].baseEffect.mul(upgradeEffect('p',21)):tmp[this.layer].upgrades[this.id].baseEffect},
+            tooltip(){return !hasUpgrade('a',44)?`Last: ${format(player[this.layer].last,player[this.layer].last.gte(1e9)?2:0)}<br>Formula: Log10(x)+1`:`Best: ${format(player[this.layer].bestOneTime),player[this.layer].bestOneTime.gte(1e9)?2:0}<br>Formula: (Log10(x)+1)*2`},
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        },
+        21:{
+            unlocked(){return getBuyableAmount('f',11).gte(1)},
+            title:'QwQ',
+            description:'Boost last upgrade\'s effect by itself.',
+            cost: n(1e4),
+            baseEffect() {return tmp[this.layer].upgrades[14].baseEffect.div(2).max(1)},
+            effect() {return hasUpgrade('p',22)?tmp[this.layer].upgrades[this.id].baseEffect.mul(upgradeEffect('p',22)):tmp[this.layer].upgrades[this.id].baseEffect},
+            tooltip:`Formula: x/2`,
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        },
+        22:{
+            unlocked(){return getBuyableAmount('f',11).gte(2)},
+            title:'e',
+            description:'Boost last upgrade\'s effect by itself.',
+            cost: n(1e6),
+            baseEffect() {return tmp[this.layer].upgrades[21].baseEffect.div(2).max(1)},
+            effect() {return hasUpgrade('p',23)?tmp[this.layer].upgrades[this.id].baseEffect.mul(upgradeEffect('p',23)):tmp[this.layer].upgrades[this.id].baseEffect},
+            tooltip:`Formula: x/2`,
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        },
+        23:{
+            unlocked(){return getBuyableAmount('f',11).gte(3)},
+            title:'308',
+            description:'Boost last upgrade\'s effect by itself.',
+            cost: n(1e8),
+            effect() {return tmp[this.layer].upgrades[22].baseEffect.div(2).max(1)},
+            tooltip:`Formula: x/2`,
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
     },
     doReset(resettingLayer) {
-        if (resettingLayer==this.layer||!(inBranch(this.layer,resettingLayer))) return;
+        if (resettingLayer==this.layer||!(inBranch(this.layer,resettingLayer))) {
+            return;
+        }
         keepUpgrades=[]
         if (hasUpgrade('a',11)) keepUpgrades.push(11)
         if (hasUpgrade('a',12)) keepUpgrades.push(12)

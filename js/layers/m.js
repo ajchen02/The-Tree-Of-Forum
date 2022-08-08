@@ -5,7 +5,7 @@ addLayer("m", {
         points: d0,         
     }},
 
-    color: "#793784",                       
+    color: "#793784",
     resource: "milestones",            
     row: 2,
     position: 0,                        
@@ -17,12 +17,16 @@ addLayer("m", {
         return tmp[this.layer].achievementPopups
     },    
 
-    requires: d20,              
     layerShown() {return hasUpgrade('p',14)||player[this.layer].unlocked||player.a.unlocked},
     hotkeys: [
         {key: "m", description: "M: Reset for milestones", onPress(){if (canReset(this.layer)) doReset(this.layer)},unlocked() {return player[this.layer].unlocked}},
     ],
+
+
+
     type: "custom",
+    requires: d20,      
+    exponent: d2, 
     exponentBase: d2,
     mult: d20,
     getResetGain(){
@@ -39,7 +43,7 @@ addLayer("m", {
     },
     canReset(){return tmp[this.layer].getResetGain.gte(1)?true:false},
     prestigeButtonText(){
-        if (/*Can Bulk Gain*/hasUpgrade('a',33)) {return `Reset for <b>${format(tmp[this.layer].getResetGain,0)}</b> ${tmp[this.layer].resource}<br>Next at Next at ${format(tmp[this.layer].getNextAt,tmp[this.layer].getNextAt.gte('1e9')?2:null)} prestige points`}
+        if (/*Can Bulk Gain*/hasUpgrade('a',33)) {return `Reset for <b>${format(tmp[this.layer].getResetGain,0)}</b> ${tmp[this.layer].resource}<br>Next at ${format(tmp[this.layer].getNextAt,tmp[this.layer].getNextAt.gte('1e9')?2:null)} prestige points`}
         if (/*Can gain next*/tmp[this.layer].getResetGain.gte(1)) {return `<b>Reset for next ${tmp[this.layer].resource}.</b>`}
         /*Can't gain next*/ return `Next at ${format(tmp[this.layer].getNextAt,tmp[this.layer].getNextAt.gte('1e9')?2:null)} prestige points.<br>Maybe ${(
         (tmp[this.layer].baseAmount.lte(0))?(format(0)):(format(Decimal.max(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt),tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt.mul(100))).mul(100))))
@@ -47,8 +51,9 @@ addLayer("m", {
         format(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100))}%, ${format(tmp[this.layer].baseAmount.max(1).log(tmp[this.layer].getNextAt).mul(100))}%, ${format(Decimal.add(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt).mul(100),format(tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt).mul(100))).div(2))}%<br>`
         //+'It\'s very hard to predict an "pertenge" of this after all.'
         },
-    exponent: d2,        
-    resetsNothing(){return hasUpgrade('a',34)},                  
+
+
+    resetsNothing(){return hasUpgrade('a',34)},
     prestigeNotify(){
         if (tmp[this.layer].getResetGain.gte(1)) return true
     },
@@ -69,9 +74,9 @@ addLayer("m", {
             effect() {if (hasAchievement('m',12)) return n(1.25).pow(player[this.layer].points.max(1)); else return d1},
         },
         13: {
-            unlocked(){return hasAchievement('m',12)||player.s.unlocked},
+            unlocked(){return hasAchievement('m',12)&&getBuyableAmount('f',21).gte(1)||player.s.unlocked},
             name: "Skills",
-            done() { return player[this.layer].points.gte(3)||player.s.unlocked},
+            done() { return player[this.layer].points.gte(3)&&tmp[this.layer].achievements[this.id].unlocked||player.s.unlocked},
             goalTooltip:'Get 3 Milestones.<br>You have the skill to do this.',
             doneTooltip(){return 'Unlock skills layer.'},
             onComplete(){player.s.unlocked=true},
@@ -98,9 +103,18 @@ addLayer("m", {
             name: "allodox-aphilia",
             done() { return player[this.layer].points.gte(10)&&tmp[this.layer].achievements[this.id].unlocked},
             goalTooltip:'Get 10 Milestones.<br>Now some people will be mad cuz i programmed something to unlock something to unlock something.',
-            doneTooltip(){return 'Allows you to buy all row one upgrades in the allodoxaphobia layer.'},
+            doneTooltip(){return 'Allows you to buy all row 1&2 upgrades in the allodoxaphobia layer.'},
             effect:'yes',
         },
+        21: {
+            unlocked(){return hasAchievement('m',16)&&getBuyableAmount('f',21).gte(3)},
+            name: "Boosters but better",
+            done() { return player[this.layer].points.gte(20)&&tmp[this.layer].achievements[this.id].unlocked},
+            goalTooltip:'Get 20 Milestones.<br>Wdym "We don\'t have boosters"?',
+            doneTooltip(){return 'Unlock SUPER booster layer.'},
+            //onComplete(){player.sb.unlocked=true},
+        },
+
     },
     tabFormat: [
             "main-display",
