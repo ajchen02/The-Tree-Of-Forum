@@ -1,9 +1,12 @@
 
 let changelog = `<h1>Changelog:</h1><br>
+<br><h3>v0.24</h3><br>
+    - I'm sorry paperpliot.<br>
+    - Some banlance.<br>
 <br><h3>v0.23</h3><br>
     - Added one row of upgrade in prestige.<br>
     - Added SUPER BOOSTER.<br>
-    - A LOT banlance.
+    - A LOT banlance.<br>
 <br><h3>v0.21</h3><br>
     - Added Skills.<br>
     - Some performance improvements.<br>

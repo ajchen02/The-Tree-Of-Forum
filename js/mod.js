@@ -14,8 +14,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.23",
-	name: "Profectus is so hard",
+	num: "0.24",
+	name: "feeling so attacked rn",
 }
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...<br>Go forums.moddingtree.com/t/the-tree-of-forum-vote-area/599 to make suggestions!`
