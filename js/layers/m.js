@@ -74,7 +74,7 @@ addLayer("m", {
             effect() {if (hasAchievement('m',12)) return n(1.25).pow(player[this.layer].points.max(1)); else return d1},
         },
         13: {
-            unlocked(){return hasAchievement('m',12)&&getBuyableAmount('f',21).gte(1)||player.s.unlocked},
+            unlocked(){return hasAchievement('m',12)||player.s.unlocked},
             name: "Skills",
             done() { return player[this.layer].points.gte(3)&&tmp[this.layer].achievements[this.id].unlocked||player.s.unlocked},
             goalTooltip:'Get 3 Milestones.<br>You have the skill to do this.',
@@ -107,7 +107,7 @@ addLayer("m", {
             effect:'yes',
         },
         21: {
-            unlocked(){return hasAchievement('m',16)&&getBuyableAmount('f',21).gte(3)},
+            unlocked(){return hasAchievement('m',16)&&getBuyableAmount('f',21).gte(2)},
             name: "Boosters but better",
             done() { return player[this.layer].points.gte(20)&&tmp[this.layer].achievements[this.id].unlocked},
             goalTooltip:'Get 20 Milestones.<br>Wdym "We don\'t have boosters"?',

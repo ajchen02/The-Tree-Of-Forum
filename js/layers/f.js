@@ -64,7 +64,7 @@ addLayer("f", {
         21: {
             title:'upvoid',
             purchaseLimit(){
-                return d3
+                return d2
             },
             cost(x) { return d3.pow(x.add(1)) },
             display() { 
