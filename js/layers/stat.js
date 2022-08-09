@@ -63,7 +63,7 @@ addLayer("stat", {
             if (tmp.s.bars.p.unlocked){words+=`Skill: ${format(getSkillEffect('p'))}x<br>`}
             return words
         }],],
-        unlocked(){return player.f.unlocked},
+        unlocked(){return tmp.s.bars.p.unlocked},
         },
 
 }})

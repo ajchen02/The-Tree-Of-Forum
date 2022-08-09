@@ -86,7 +86,7 @@ addLayer("m", {
             unlocked(){return hasAchievement('m',12)},
             name: "I'M RUNNING OUT OF NAMES!!!",
             done() { return player[this.layer].points.gte(5) },
-            goalTooltip:'Get 5 Milestones.<br>Really.',
+            goalTooltip:'Get 5 Milestones.<br>This is going to be a long one, I suggest get 5 allo first.',
             doneTooltip(){return `Boost the first achievement by 1.5x PER ACHIEVEMENTS.<br>Currently: ${format(tmp.m.achievements[14].effect)}x.`},
             effect() {if (hasAchievement('m',14)) return n(1.5).pow(player[this.layer].achievements.length).max(1); else return d1},
         },

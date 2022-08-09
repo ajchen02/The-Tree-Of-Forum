@@ -17,17 +17,16 @@ addLayer("f", {
     
 
     type: "custom",
-    exponentBase: d2,
+    exponentBase: n(1.5),
     mult: n(1e4),
     getResetGain(){
-        //console.log(player.f.points.add(d1).div(this.mult).log(this.exponentBase))
         if (tmp[this.layer].baseAmount.lt(1e4)) return d0
+        //log[exBase](baseAmount/mult)
         current = tmp[this.layer].baseAmount.add(d1).div(this.mult).log(this.exponentBase).floor().add(d1)
-        //log[exBase]((x+1)/20).floor+1
-        return current.max(0) //.sub(player[this.layer].points).max(d0)
+        return current.max(0)
     },
     getNextAt(canMax=false){
-        let current=tmp[this.layer].getResetGain//.add(player[this.layer].points)
+        let current=tmp[this.layer].getResetGain
         return this.exponentBase.pow(current).times(this.mult)
     },
     canReset(){return tmp[this.layer].getResetGain.gte(d1)?true:false},
@@ -47,7 +46,7 @@ addLayer("f", {
         11: {
             title:'upvoid',
             purchaseLimit(){
-                return /*d4*/d3
+                return /*d4*/d2
             },
             cost(x) { return d1.mul(x.add(1)) },
             display() { 
@@ -64,7 +63,7 @@ addLayer("f", {
         21: {
             title:'upvoid',
             purchaseLimit(){
-                return d2
+                return d3
             },
             cost(x) { return d3.pow(x.add(1)) },
             display() { 

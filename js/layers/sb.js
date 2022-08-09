@@ -54,6 +54,7 @@ addLayer("sb", {
     prestigeNotify(){
         if (tmp[this.layer].getResetGain.gte(1)) return true
     },
+    canBuyMax(){return false},
 
     effect(){
         return player[this.layer].boosters.add(1).pow(1.25).max(1)
