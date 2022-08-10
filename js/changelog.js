@@ -1,5 +1,8 @@
 
 let changelog = `<h1>Changelog:</h1><br>
+<br><h3>v0.25</h3><br>
+    - Added a page in stat layer.<br>
+    - Some banlance.<br>
 <br><h3>v0.24</h3><br>
     - I'm sorry paperpliot.<br>
     - Some banlance.<br>

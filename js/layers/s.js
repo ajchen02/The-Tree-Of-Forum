@@ -1,17 +1,12 @@
-/*function getEXPfactor(){return layers.exp.bars.exp.effect()}
-function getEXPeff(id){return layers.exp.bars[id].effect()}
-function getSkillLevel(id){return layers.exp.bars[id].level()}
-function giveEXP(id,input = n(0)){player.exp[id]=player.exp[id].add(layers.exp.bars[id].gain(false,input))}
-*/
 function getSkillExp(id){return [player.s.exps[id],tmp.s.bars[id].getNextAt]}
 function getSkillLevel(id){return [tmp.s.bars[id].level.floor(),tmp.s.bars[id].level]}
 function getSkillEffect(id){return tmp.s.bars[id].effect}
 function setSkillExp(id,input=d0){player.s.exps[id]=n(input)}
 function addSkillExp(id,input=d0){player.s.exps[id]=player.s.exps[id].add(input)}
 addLayer("s", {
-    name: "skills", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "S", // This appears on the layer's node. Default is the id with the first letter capitalized
-    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    name: "skills", 
+    symbol: "S", 
+    position: 0, 
     startData() { return {
         unlocked: false,
 		points:d0,
@@ -19,10 +14,10 @@ addLayer("s", {
     }},
     color: "white",
     tooltip:"Skills",
-    resource: "skill", // Name of prestige currency
-    baseAmount() {return player.points}, // Get the current amount of baseResource
-    type: "none", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    row: "side", // Row the layer is in on the tree (0 is the first row)
+    resource: "skill",
+    baseAmount() {return player.points},
+    type: "none", 
+    row: "side",
     layerShown(){return player[this.layer].unlocked},
 
     update(diff){
@@ -63,19 +58,16 @@ addLayer("s", {
                  'color': 'black',
              },
             fillStyle: {"background-color":layers.a.color},
-            //addExp(){if (true) pass},
             level(){return getSkillExp(this.id)[0].max(1).log(1.5).max(0)},
             getNextAt(){return n(1.5).pow(getSkillLevel(this.id)[0].add(1))},
             effect(){return getSkillLevel(this.id)[0]},
         },
     },
     tabFormat: [
-        //"main-display",
-        ["display-text",'this layer normally don\'t reset.',],
+        ["display-text",'this layer normally dosen\'t reset.',],
 
         ['bar','p'],
         ['bar','a'],
-        //"clickables",
     ],
     
 })

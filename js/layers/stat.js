@@ -39,6 +39,7 @@ addLayer("stat", {
     type: "none", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     row: "side", // Row the layer is in on the tree (0 is the first row)
     layerShown(){return true},
+
     tabFormat:{'Base point':{
         content:["blank",
         ["display-text",function(){
@@ -64,6 +65,39 @@ addLayer("stat", {
             return words
         }],],
         unlocked(){return tmp.s.bars.p.unlocked},
-        },
+    },
+    'Suggests':{
+        content:[['microtabs','Suggest']]
+    },
+    },
 
-}})
+    microtabs: {
+        'Suggest': {
+            'Will add': {
+                content:[["display-text",`
+                A quark node<br>
+                alignment layer<br>
+                anti-challenges<br>
+                Achievement layer, uses milestones <del>why</del><br>
+                re-do allodoxaphobia<br>
+                <del>Second</del> row of prestige upgrades<br>
+                Make a Mystery Minaret in the tree <br><del>shinwmyste now i officially hate you too</del><br>
+                death and life layer<br>
+                Skills allocation<br>
+                `]]
+            },
+            'Already added': {
+                content:[["display-text",`
+                <del>Delete line</del> means original suggest, <i>Italic</i> means actual results.<br>
+                i'm too lazy to add things before v0.23<br><br>
+
+                a <del>side layer</del> <i>page</i> that show what suggestion will/already add to the game<br>
+                <del>feeling so attacked rn</del><br>
+                <del>please don't put this in the game</del><br>
+                
+                `]]
+            }
+        },
+    },
+
+})
