@@ -24,7 +24,7 @@ function getPointGen() {
 	return {total:base.times(pGain).mul(mGain).mul(aGain).times(fGain).mul(sbGain),p:pGain,m:mGain,a:aGain,f:fGain,sb:sbGain}
 }
 
-addLayer("stat", {
+addLayer("ach", {
     name: "Achievements", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "Ach", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
@@ -52,12 +52,12 @@ addLayer("stat", {
             done() { return player.p.points.gte(2)&&hasUpgrade('p',12) },
             goalTooltip:"You will know when.",
             doneTooltip:":trolled:",
-            unlocked(){ return hasAchievement('stat',11)},
+            unlocked(){ return hasAchievement('ach',11)},
         },
     },
 
     tabFormat:{
-    'Achievements':{content:['achievements'],},
+    'Achievements':{content:[["display-text",`achievements will unlock with progress to avoid spoiler.`],'blank','achievements'],},
     'miscellaneous':{content:[["display-text",`Stats:`],'blank',['microtabs','Stat',{'border-style':'none','border-bottom-style':'solid'}],'blank',["display-text",`Suggests:`],'blank',['microtabs','Suggest',{'border-style':'none'}],'blank',["display-image", 'js/images/your guys.png', {maxWidth:'90%',maxHeight:'90%',position:'relative'}],]},},
 
     microtabs: {

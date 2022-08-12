@@ -3,7 +3,7 @@ let modInfo = {
 	id: "TTOF_AjchenPath",
 	author: "TMT community",
 	pointsName: "points",
-	modFiles: ["layers/p.js","layers/m.js","layers/a.js","layers/f.js","layers/s.js","layers/sb.js","layers/stat.js",		"tree.js",'changelog.js'],
+	modFiles: ["layers/p.js","layers/m.js","layers/a.js","layers/f.js","layers/s.js","layers/sb.js","layers/ach.js",		"tree.js",'changelog.js'],
 
 	discordName: "Forum Link",
 	discordLink: "https://forums.moddingtree.com/t/the-tree-of-forum-vote-area/599",
