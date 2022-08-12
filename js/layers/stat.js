@@ -25,51 +25,40 @@ function getPointGen() {
 }
 
 addLayer("stat", {
-    name: "stats", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "ST", // This appears on the layer's node. Default is the id with the first letter capitalized
+    name: "Achievements", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "Ach", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
     }},
     color: "#FFD400",
-    tooltip:"Stats",
-    resource: "stat", // Name of prestige currency
+    tooltip:"Achievements",
+    resource: "achievement", // Name of prestige currency
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "none", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     row: "side", // Row the layer is in on the tree (0 is the first row)
     layerShown(){return true},
 
-    tabFormat:{'Base point':{
-        content:["blank",
-        ["display-text",function(){
-            words=''
-            if (player.p.unlocked){words+=`Prestige layer has boost your point gain by ${format(tmp.moreGen.p)}x (${format(tmp.moreGen.p.log(tmp.pointGen).mul(100))}%)<br>`}
-            if (player.m.unlocked){words+=`Milestone layer boost has your point gain by ${format(tmp.moreGen.m)}x (${format(tmp.moreGen.m.log(tmp.pointGen).mul(100))}%)<br>`}
-            if (player.a.unlocked){words+=`Allodoxaphobia layer has boost your point gain by ${format(tmp.moreGen.a)}x (${format(tmp.moreGen.a.log(tmp.pointGen).mul(100))}%)<br>`}
-            if (player.f.unlocked){words+=`Fruits layer has boost your point gain by ${format(tmp.moreGen.f)}x (${format(tmp.moreGen.f.log(tmp.pointGen).mul(100))}%)<br>`}
-            if (player.sb.unlocked){words+=`Super boosters has boost your point gain by ${format(tmp.moreGen.sb)}x (${format(tmp.moreGen.sb.log(tmp.pointGen).mul(100))}%)<br>`}
-            return words
-        }],
-        /*["display-image", 'https://i.postimg.cc/j2CyG6hQ/Screenshot-2022-07-24-114647.jpg',{ height: '400px', width: '1600px', position: 'relative', right: '-250px', top: '-1000px'}],
-        ['display-image', 'https://i.postimg.cc/j2CyG6hQ/Screenshot-2022-07-24-114647.jpg' ],*/
-        'blank',
-        ["display-image", 'js/images/your guys.png', {maxWidth:'85%',maxHeight:'85%',position: 'relative'}],
-    ],},
-    "Prestige point":{
-        content:["blank",
-        ["display-text",function(){
-            words=''
-            if (player.f.unlocked){words+=`Fruits layer: ${format(tmp.f.effect)}x<br>`}
-            if (tmp.s.bars.p.unlocked){words+=`Skill: ${format(getSkillEffect('p'))}x<br>`}
-            return words
-        }],],
-        unlocked(){return tmp.s.bars.p.unlocked},
+    achievements:{
+        11: {
+            name: "10/10<br> no 10sec timewall",
+            done() { return player.p.points.gte(1) },
+            goalTooltip:"Wait, why did you still not completed this?",
+            doneTooltip:"I considered about QoLs.<br> Effect: Nope, try harder.",
+        },
+        12: {
+            name: "SCAM",
+            done() { return player.p.points.gte(2)&&hasUpgrade('p',12) },
+            goalTooltip:"You will know when.",
+            doneTooltip:":trolled:",
+            unlocked(){ return hasAchievement('stat',11)},
+        },
     },
-    'Suggests':{
-        content:[['microtabs','Suggest']]
-    },
-    },
+
+    tabFormat:{
+    'Achievements':{content:['achievements'],},
+    'miscellaneous':{content:[["display-text",`Stats:`],'blank',['microtabs','Stat',{'border-style':'none','border-bottom-style':'solid'}],'blank',["display-text",`Suggests:`],'blank',['microtabs','Suggest',{'border-style':'none'}],'blank',["display-image", 'js/images/your guys.png', {maxWidth:'90%',maxHeight:'90%',position:'relative'}],]},},
 
     microtabs: {
         'Suggest': {
@@ -96,8 +85,33 @@ addLayer("stat", {
                 <del>please don't put this in the game</del><br>
                 
                 `]]
-            }
+            },
         },
+        'Stat':{'Base point':{
+            content:[
+            ["display-text",function(){
+                words=''
+                if (player.p.unlocked){words+=`Prestige layer has boost your point gain by ${format(tmp.moreGen.p)}x (${format(tmp.moreGen.p.log(tmp.pointGen).mul(100))}%)<br>`}
+                if (player.m.unlocked){words+=`Milestone layer boost has your point gain by ${format(tmp.moreGen.m)}x (${format(tmp.moreGen.m.log(tmp.pointGen).mul(100))}%)<br>`}
+                if (player.a.unlocked){words+=`Allodoxaphobia layer has boost your point gain by ${format(tmp.moreGen.a)}x (${format(tmp.moreGen.a.log(tmp.pointGen).mul(100))}%)<br>`}
+                if (player.f.unlocked){words+=`Fruits layer has boost your point gain by ${format(tmp.moreGen.f)}x (${format(tmp.moreGen.f.log(tmp.pointGen).mul(100))}%)<br>`}
+                if (player.sb.unlocked){words+=`Super boosters has boost your point gain by ${format(tmp.moreGen.sb)}x (${format(tmp.moreGen.sb.log(tmp.pointGen).mul(100))}%)<br>`}
+                return words
+            }],
+            /*["display-image", 'https://i.postimg.cc/j2CyG6hQ/Screenshot-2022-07-24-114647.jpg',{ height: '400px', width: '1600px', position: 'relative', right: '-250px', top: '-1000px'}],
+            ['display-image', 'https://i.postimg.cc/j2CyG6hQ/Screenshot-2022-07-24-114647.jpg' ],*/
+            'blank',
+        ],},
+        "Prestige point":{
+            content:[
+            ["display-text",function(){
+                words=''
+                if (player.f.unlocked){words+=`Fruits layer: ${format(tmp.f.effect)}x<br>`}
+                if (tmp.s.bars.p.unlocked){words+=`Skill: ${format(getSkillEffect('p'))}x<br>`}
+                return words
+            }],],
+            unlocked(){return tmp.s.bars.p.unlocked},
+        },},
     },
 
 })
