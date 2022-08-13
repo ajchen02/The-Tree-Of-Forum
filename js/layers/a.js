@@ -202,10 +202,10 @@ addLayer("a", {
             description:'Boost Prestige upgrade 14.',
             cost(){return !getBuyableAmount('f',22).gte(5)?d7:d0},
             effect: 'yes',
-            tooltip:'Effect: 4x it\'s effect, and use best instead of total.',
+            tooltip:'Effect: 2.5x it\'s effect, and use best instead of total.',
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(40)},
             unlocked(){return player[this.layer].total.gte(20)&&getBuyableAmount('f',22).gte(2)},
-            effectDisplay() { return format(d4)+"x" },
+            effectDisplay() { return "2.5x" },
         },
     },
     clickables:{
