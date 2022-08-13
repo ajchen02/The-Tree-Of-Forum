@@ -39,7 +39,8 @@ addLayer("p", {
         //console.log(gain)
         if (tmp.s.bars.p.unlocked) addSkillExp('p',gain)
         if (hasUpgrade('a',44)) {player[this.layer].bestOneTime = player[this.layer].bestOneTime.max(gain)}
-        else {player[this.layer].last=gain}
+        else {if (gain.lt(player[this.layer].last)&&hasAchievement('ach',13)&&!hasAchievement('ach',14)) {tmp.p.upgrades[14].sadJakub=true}
+            player[this.layer].last=gain}
     },
     upgrades:{
         11: {
@@ -58,9 +59,9 @@ addLayer("p", {
             cost: d3,
             effect() {
                 //return hasUpgrade(this.layer,this.id)?player[this.layer].points.add(d1).sqrt().min(d5):player[this.layer].points.add(d1).sqrt()
-                if (!hasUpgrade(this.layer,this.id))return player[this.layer].points.add(d1).pow(2)
-                if (hasUpgrade('a',42))return player[this.layer].points.add(d1).pow(2).min(d5.add(upgradeEffect('a',42)))
-                return player[this.layer].points.add(d1).pow(2).min(d5)
+                if (!hasUpgrade(this.layer,this.id))return player[this.layer].points.pow(2).max(1)
+                if (hasUpgrade('a',42))return player[this.layer].points.pow(2).min(d5.add(upgradeEffect('a',42))).max(1)
+                return player[this.layer].points.max(1).pow(2).min(d5)
             },
             //tooltip:"(And a +1 output as Fawwaz Arkan suggest)",
             tooltip(){if (hasUpgrade('a',42)) return `Now i remember<br>Hardcap at ${format(d5.add(upgradeEffect('a',42)))}x<br>Formula: x^2`
@@ -88,6 +89,7 @@ addLayer("p", {
             effect() {return hasUpgrade('p',21)?tmp[this.layer].upgrades[this.id].baseEffect.mul(upgradeEffect('p',21)):tmp[this.layer].upgrades[this.id].baseEffect},
             tooltip(){return !hasUpgrade('a',44)?`Last: ${format(player[this.layer].last,player[this.layer].last.gte(1e9)?2:0)}<br>Formula: Log10(x)+1`:`Best: ${format(player[this.layer].bestOneTime),player[this.layer].bestOneTime.gte(1e9)?2:0}<br>Formula: (Log10(x)+1)*2`},
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            sadJakub:false,
         },
         21:{
             unlocked(){return getBuyableAmount('f',11).gte(1)},

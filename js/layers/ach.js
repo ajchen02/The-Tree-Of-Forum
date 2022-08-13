@@ -45,16 +45,46 @@ addLayer("ach", {
             name: "10/10<br> no 10sec timewall",
             done() { return player.p.points.gte(1) },
             goalTooltip:"Wait, why did you still not completed this?",
-            doneTooltip:"I considered about QoLs.<br> Effect: Nope, try harder.",
+            doneTooltip:"I considered about QoLs.",
+            image:'js/images/achievements/11.png'
         },
         12: {
             name: "SCAM",
-            done() { return player.p.points.gte(2)&&hasUpgrade('p',12) },
-            goalTooltip:"You will know when.",
+            done() { return player.p.points.gte(3)&&hasUpgrade('p',12) },
+            goalTooltip:"Most of achievement can be completed by just progressing,",
             doneTooltip:":trolled:",
             unlocked(){ return hasAchievement('ach',11)},
         },
-    },
+        13: {
+            name: "Wait, that's it?",
+                done() { return hasUpgrade('p',14) },
+                goalTooltip:"So you needn't check this tab too often :)",
+                doneTooltip:"obviously not.",
+                unlocked(){ return hasAchievement('ach',11)},
+            },
+        14: {
+        name: "Jacob will be sad.",
+            done() { return tmp.p.upgrades[14].sadJakub },
+            goalTooltip:"Wrongly use 4th upgrade.",
+            doneTooltip:";-;",
+            unlocked(){ return hasAchievement('ach',13)},
+        },
+        21: {
+            name: "Now play again with more layer!",
+                done() { return player.m.unlocked||player.a.unlocked },
+                goalTooltip:"I suggest play milestone first.",
+                doneTooltip:`I suggest to do bulk gain allodoxaphobia until you can unlock more upgrades.`,
+                unlocked(){ return hasAchievement('ach',13)},
+            },
+        22: {
+            name: "Now play again with BOTH layer!",
+                done() { return player.m.unlocked||player.a.unlocked },
+                goalTooltip:"You can try guess it.",
+                doneTooltip:`due to Achievements are added much later, almost no effect are provided.`,
+                unlocked(){ return hasAchievement('ach',21)},
+            },
+    
+        },
 
     tabFormat:{
     'Achievements':{content:[["display-text",`achievements will unlock with progress to avoid spoiler.`],'blank','achievements'],},
@@ -62,8 +92,7 @@ addLayer("ach", {
 
     microtabs: {
         'Suggest': {
-            'Will add': {
-                content:[["display-text",`
+            'Will add': {content:[["display-text",`
                 A quark node<br>
                 alignment layer<br>
                 anti-challenges<br>
@@ -73,19 +102,14 @@ addLayer("ach", {
                 Make a Mystery Minaret in the tree <br><del>shinwmyste now i officially hate you too</del><br>
                 death and life layer<br>
                 Skills allocation<br>
-                `]]
-            },
-            'Already added': {
-                content:[["display-text",`
+                `]]},
+            'Already added': {content:[["display-text",`
                 <del>Delete line</del> means original suggest, <i>Italic</i> means actual results.<br>
                 i'm too lazy to add things before v0.23<br><br>
-
                 a <del>side layer</del> <i>page</i> that show what suggestion will/already add to the game<br>
                 <del>feeling so attacked rn</del><br>
                 <del>please don't put this in the game</del><br>
-                
-                `]]
-            },
+                `]]},
         },
         'Stat':{'Base point':{
             content:[
