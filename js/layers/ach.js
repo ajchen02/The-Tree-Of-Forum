@@ -132,7 +132,6 @@ addLayer("ach", {
                 A quark node<br>
                 alignment layer<br>
                 anti-challenges<br>
-                Achievement layer, uses milestones <del>why</del><br>
                 re-do allodoxaphobia<br>
                 <del>Second</del> row of prestige upgrades<br>
                 Make a Mystery Minaret in the tree <br><del>shinwmyste now i officially hate you too</del><br>
@@ -145,6 +144,7 @@ addLayer("ach", {
                 a <del>side layer</del> <i>page</i> that show what suggestion will/already add to the game<br>
                 <del>feeling so attacked rn</del><br>
                 <del>please don't put this in the game</del><br>
+                Achievement layer, <del>uses milestones</del><br>
                 `]]},
         },
         'Stat':{'Base point':{

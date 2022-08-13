@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.25",
+	num: "0.26",
 	name: "feeling so attacked rn",
 }
 
@@ -43,7 +43,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-        return player.sb.unlocked&&player.p.upgrades.include(23)
+        return false
 }
 
 
