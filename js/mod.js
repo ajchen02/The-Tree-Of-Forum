@@ -43,7 +43,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-        return player.sb.unlocked
+        return player.sb.unlocked&&player.p.upgrades.include(23)
 }
 
 

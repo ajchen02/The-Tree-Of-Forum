@@ -1,4 +1,4 @@
-function getSkillExp(id){return [player.s.exps[id],tmp.s.bars[id].getNextAt]}
+function getSkillExp(id){return [player.s.exps[id],tmp.s.bars[id].getNextAt,tmp.s.bars[id].getLastAt]}
 function getSkillLevel(id){return [tmp.s.bars[id].level.floor(),tmp.s.bars[id].level]}
 function getSkillEffect(id){return tmp.s.bars[id].effect}
 function setSkillExp(id,input=d0){player.s.exps[id]=n(input)}
@@ -29,8 +29,8 @@ addLayer("s", {
             direction: RIGHT,
             width: 450,
             height: 50,
-            display(){return `Prestige: level ${getSkillLevel(this.id)[0]}, boosting prestige points by ${format(getSkillEffect(this.id))}x.<br>
-                            exp:${format(getSkillExp(this.id)[0],getSkillExp(this.id)[0].gte(1e9)?2:0)}/${format(getSkillExp(this.id)[1],getSkillExp(this.id)[1].gte(1e9)?2:0)}, gain by prestige`},
+            display(){return `Prestige: level ${getSkillLevel(this.id)[0]}, boosting prestige points by ${format(getSkillEffect(this.id),1)}x.<br>
+                            exp:${format(getSkillExp(this.id)[0].sub(getSkillExp(this.id)[2]),getSkillExp(this.id)[0].gte(1e9)?2:0)}/${format(getSkillExp(this.id)[1].sub(getSkillExp(this.id)[2]),getSkillExp(this.id)[1].gte(1e9)?2:0)}, gain by prestige`},
             unlocked(){return player[this.layer].unlocked},
             progress() { return getSkillLevel(this.id)[1].sub(getSkillLevel(this.id)[0]) },
             textStyle:{
@@ -41,15 +41,16 @@ addLayer("s", {
             fillStyle: {"background-color":layers.p.color},
             //addExp(){if (true) pass},
             level(){return getSkillExp(this.id)[0].max(1).div(10).log(2).max(0)},
+            getLastAt(){return n(2).pow(getSkillLevel(this.id)[0]).mul(10)},
             getNextAt(){return n(2).pow(getSkillLevel(this.id)[0].add(1)).mul(10)},
-            effect(){return n(1.1).pow(getSkillLevel(this.id)[0]).max(1)},
+            effect(){return d1.add(n(0.2).mul(getSkillLevel(this.id)[0])).max(1)},
         },
         a: {
             direction: RIGHT,
             width: 450,
             height: 50,
             display(){return `Allodoxaphobia: level ${getSkillLevel(this.id)[0]}, Adding allodoxaphobia by +${format(getSkillEffect(this.id),0)}.<br>
-                            exp:${format(getSkillExp(this.id)[0],getSkillExp(this.id)[0].gte(1e9)?2:0)}/${format(getSkillExp(this.id)[1],getSkillExp(this.id)[1].gte(1e9)?2:0)}, but they can only buy upgrades`},
+                            exp:${format(getSkillExp(this.id)[0].sub(getSkillExp(this.id)[2]))}/${format(getSkillExp(this.id)[1].sub(getSkillExp(this.id)[2]))}, but they can only buy upgrades`},
             unlocked(){return false},
             progress() { return getSkillLevel(this.id)[1].sub(getSkillLevel(this.id)[0]) },
             textStyle:{
@@ -59,6 +60,7 @@ addLayer("s", {
              },
             fillStyle: {"background-color":layers.a.color},
             level(){return getSkillExp(this.id)[0].max(1).log(1.5).max(0)},
+            getLastAt(){return n(1.5).pow(getSkillLevel(this.id)[0])},
             getNextAt(){return n(1.5).pow(getSkillLevel(this.id)[0].add(1))},
             effect(){return getSkillLevel(this.id)[0]},
         },

@@ -39,7 +39,7 @@ addLayer("p", {
         //console.log(gain)
         if (tmp.s.bars.p.unlocked) addSkillExp('p',gain)
         if (hasUpgrade('a',44)) {player[this.layer].bestOneTime = player[this.layer].bestOneTime.max(gain)}
-        else {if (gain.lt(player[this.layer].last)&&hasAchievement('ach',13)&&!hasAchievement('ach',14)) {tmp.p.upgrades[14].sadJakub=true}
+        else {if (gain.lt(player[this.layer].last)&&hasAchievement('ach',13)&&!hasAchievement('ach',14)) {giveAchievements('ach',14)}
             player[this.layer].last=gain}
     },
     upgrades:{
@@ -88,8 +88,7 @@ addLayer("p", {
             },
             effect() {return hasUpgrade('p',21)?tmp[this.layer].upgrades[this.id].baseEffect.mul(upgradeEffect('p',21)):tmp[this.layer].upgrades[this.id].baseEffect},
             tooltip(){return !hasUpgrade('a',44)?`Last: ${format(player[this.layer].last,player[this.layer].last.gte(1e9)?2:0)}<br>Formula: Log10(x)+1`:`Best: ${format(player[this.layer].bestOneTime),player[this.layer].bestOneTime.gte(1e9)?2:0}<br>Formula: (Log10(x)+1)*2`},
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
-            sadJakub:false,
+            effectDisplay() { return format(tmp[this.layer].upgrades[this.id].baseEffect)+"x" },
         },
         21:{
             unlocked(){return getBuyableAmount('f',11).gte(1)},
@@ -98,8 +97,8 @@ addLayer("p", {
             cost: n(1e4),
             baseEffect() {return tmp[this.layer].upgrades[14].baseEffect.div(2).max(1)},
             effect() {return hasUpgrade('p',22)?tmp[this.layer].upgrades[this.id].baseEffect.mul(upgradeEffect('p',22)):tmp[this.layer].upgrades[this.id].baseEffect},
-            tooltip:`Formula: x/2`,
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            tooltip:`Formula: x/2<br>Boost will not display on the previous upgrade.`,
+            effectDisplay() { return format(tmp[this.layer].upgrades[this.id].baseEffect)+"x" },
         },
         22:{
             unlocked(){return getBuyableAmount('f',11).gte(2)},
@@ -109,7 +108,7 @@ addLayer("p", {
             baseEffect() {return tmp[this.layer].upgrades[21].baseEffect.div(2).max(1)},
             effect() {return hasUpgrade('p',23)?tmp[this.layer].upgrades[this.id].baseEffect.mul(upgradeEffect('p',23)):tmp[this.layer].upgrades[this.id].baseEffect},
             tooltip:`Formula: x/2`,
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            effectDisplay() { return format(tmp[this.layer].upgrades[this.id].baseEffect)+"x" },
         },
         23:{
             unlocked(){return getBuyableAmount('f',11).gte(3)},
@@ -118,7 +117,7 @@ addLayer("p", {
             cost: n(1e8),
             effect() {return tmp[this.layer].upgrades[22].baseEffect.div(2).max(1)},
             tooltip:`Formula: x/2`,
-            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+            effectDisplay() { return format(tmp[this.layer].upgrades[this.id].baseEffect)+"x" },
         },
     },
     doReset(resettingLayer) {

@@ -46,7 +46,7 @@ addLayer("f", {
         11: {
             title:'upvoid',
             purchaseLimit(){
-                return /*d4*/d2
+                return /*d4*/d3
             },
             cost(x) { return d1.mul(x.add(1)) },
             display() { 

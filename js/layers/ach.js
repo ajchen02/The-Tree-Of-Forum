@@ -24,6 +24,13 @@ function getPointGen() {
 	return {total:base.times(pGain).mul(mGain).mul(aGain).times(fGain).mul(sbGain),p:pGain,m:mGain,a:aGain,f:fGain,sb:sbGain}
 }
 
+function giveAchievements(layer,id) {
+    if (isPlainObject(layers[layer].achievements[id]) && !(hasAchievement(layer, id))) {
+    player[layer].achievements.push(id)
+    if (layers[layer].achievements[id].onComplete) layers[layer].achievements[id].onComplete()
+    if (tmp[layer].achievementPopups || tmp[layer].achievementPopups === undefined) doPopup("achievement", tmp[layer].achievements[id].name, "Achievement Gotten!", 3, tmp[layer].color);
+}}
+
 addLayer("ach", {
     name: "Achievements", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "Ach", // This appears on the layer's node. Default is the id with the first letter capitalized
@@ -46,7 +53,7 @@ addLayer("ach", {
             done() { return player.p.points.gte(1) },
             goalTooltip:"Wait, why did you still not completed this?",
             doneTooltip:"I considered about QoLs.",
-            image:'js/images/achievements/11.png'
+            image:'js/images/achievements/11.png',
         },
         12: {
             name: "SCAM",
@@ -54,36 +61,65 @@ addLayer("ach", {
             goalTooltip:"Most of achievement can be completed by just progressing,",
             doneTooltip:":trolled:",
             unlocked(){ return hasAchievement('ach',11)},
+            image:'js/images/achievements/12.png',
         },
         13: {
             name: "Wait, that's it?",
-                done() { return hasUpgrade('p',14) },
-                goalTooltip:"So you needn't check this tab too often :)",
-                doneTooltip:"obviously not.",
-                unlocked(){ return hasAchievement('ach',11)},
+            done() { return hasUpgrade('p',14) },
+            goalTooltip:"So you needn't check this tab too often :)",
+            doneTooltip:"obviously not.",
+            unlocked(){ return hasAchievement('ach',11)},
+            image:'js/images/achievements/13.png',
             },
         14: {
-        name: "Jacob will be sad.",
-            done() { return tmp.p.upgrades[14].sadJakub },
+            name: "Jakub will be sad.",
+            done() { return false },//custom function used, done when Jakub upgrade's effect become weaker
             goalTooltip:"Wrongly use 4th upgrade.",
             doneTooltip:";-;",
             unlocked(){ return hasAchievement('ach',13)},
+            image:'js/images/achievements/14.png',
         },
+        15: {
+            name: "Good prestige",
+            done() {return getPointGen().p.gte(100)},
+            goalTooltip:"Try make prestige boost points.",
+            doneTooltip:`Maybe I would nerf prestige boost sometime.`,
+            unlocked(){ return hasAchievement('ach',22)},
+            image:'js/images/achievements/15.png',
+            },
         21: {
             name: "Now play again with more layer!",
-                done() { return player.m.unlocked||player.a.unlocked },
-                goalTooltip:"I suggest play milestone first.",
-                doneTooltip:`I suggest to do bulk gain allodoxaphobia until you can unlock more upgrades.`,
-                unlocked(){ return hasAchievement('ach',13)},
+            done() { return player.m.unlocked||player.a.unlocked },
+            goalTooltip:"I suggest play milestone first.",
+            doneTooltip:`I suggest to do bulk gain allodoxaphobia until you can unlock more upgrades.`,
+            unlocked(){ return hasAchievement('ach',13)},
+            image:'js/images/achievements/21.png',
             },
         22: {
             name: "Now play again with BOTH layer!",
-                done() { return player.m.unlocked||player.a.unlocked },
-                goalTooltip:"You can try guess it.",
-                doneTooltip:`due to Achievements are added much later, almost no effect are provided.`,
-                unlocked(){ return hasAchievement('ach',21)},
+            done() { return player.m.unlocked&&player.a.unlocked },
+            goalTooltip:"You can try guess it.",
+            doneTooltip:`due to Achievements was added much later, almost no effect are provided.`,
+            unlocked(){ return hasAchievement('ach',21)},
+            image:'js/images/achievements/22.png',
             },
-    
+        23: {
+            name: "But WHY",
+            done() {return false}, //custom function used, done when no upgrade is reseted when click "respec upgrades"
+            goalTooltip:"Reset allo upgrades when there is no nessary.",
+            doneTooltip:`And prestige point just fly away.`,
+            unlocked(){ return hasAchievement('ach',21)},
+            image:'js/images/achievements/23.png',
+            },
+        24: {
+            name: "Keeping upgrades",
+            done() {return hasAchievement('m',16)},
+            goalTooltip:"Get new milestones.",
+            doneTooltip:`Finally some real qol.`,
+            unlocked(){ return hasAchievement('ach',21)},
+            image:'js/images/achievements/24.png',
+            },
+            
         },
 
     tabFormat:{
