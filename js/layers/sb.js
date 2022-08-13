@@ -36,7 +36,7 @@ addLayer("sb", {
         if (tmp[this.layer].baseAmount.lt(tmp[this.layer].requires)) return d0
         current = tmp[this.layer].baseAmount.div(this.mult).max(1).log(this.exponentBase).floor().add(1)
         if (tmp[this.layer].canBuyMax) return current.sub(player[this.layer].points).max(0)
-                else return current.sub(player[this.layer].points).max(0)
+                else return current.sub(player[this.layer].points).max(0).min(1)
     },
     getNextAt(canMax=false){
         let current=tmp[this.layer].getResetGain.add(player[this.layer].points)
@@ -44,13 +44,12 @@ addLayer("sb", {
     },
     canReset(){return tmp[this.layer].getResetGain.gte(1)?true:false},
     prestigeButtonText(){
-        if (/*Can Bulk Gain*/false) {return `Reset for <b>${format(tmp[this.layer].getResetGain,0)}</b> ${tmp[this.layer].resource}<br>Next at ${format(tmp[this.layer].getNextAt,tmp[this.layer].getNextAt.gte('1e9')?2:null)} prestige points`}
+        if (tmp[this.layer].canBuyMax) {return `Reset for <b>${format(tmp[this.layer].getResetGain,0)}</b> ${tmp[this.layer].resource}<br>Next at ${format(tmp[this.layer].getNextAt,tmp[this.layer].getNextAt.gte('1e9')?2:null)} prestige points`}
         if (/*Can gain next*/tmp[this.layer].getResetGain.gte(1)) {return `<b>Reset for ${tmp[this.layer].resource}.</b>`}
         /*Can't gain next*/ return `Next at ${format(tmp[this.layer].getNextAt,tmp[this.layer].getNextAt.gte('1e9')?2:null)} ${tmp[this.layer].baseResource}.<br>${(
         (tmp[this.layer].baseAmount.lte(0))?(format(0)):(format(Decimal.max(tmp[this.layer].baseAmount.div(tmp[this.layer].getNextAt),tmp[this.layer].baseAmount.log(tmp[this.layer].getNextAt.mul(100))).mul(100))))
         }% completed<br>`
         },
-    resetsNothing(){return hasUpgrade('a',34)},                  
     prestigeNotify(){
         if (tmp[this.layer].getResetGain.gte(1)) return true
     },
