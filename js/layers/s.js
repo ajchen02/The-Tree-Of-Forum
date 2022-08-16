@@ -10,7 +10,7 @@ addLayer("s", {
     startData() { return {
         unlocked: false,
 		points:d0,
-        exps:{p:d0,a:d0}
+        exps:{p:d10,a:d0}
     }},
     color: "white",
     tooltip:"Skills",
