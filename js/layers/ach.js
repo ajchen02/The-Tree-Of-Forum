@@ -24,6 +24,16 @@ function getPointGen() {
 	return {total:base.times(pGain).mul(mGain).mul(aGain).times(fGain).mul(sbGain),p:pGain,m:mGain,a:aGain,f:fGain,sb:sbGain}
 }
 
+function getStartPoints(){
+    if (player.timePlayed<=10) return n(modInfo.initialStartPoints)
+	return d0
+}
+
+// Determines if it should show points/sec
+function canGenPoints(){
+	return true
+}
+
 function giveAchievements(layer,id) {
     if (isPlainObject(layers[layer].achievements[id]) && !(hasAchievement(layer, id))) {
     player[layer].achievements.push(id)
@@ -124,7 +134,9 @@ addLayer("ach", {
 
     tabFormat:{
     'Achievements':{content:[["display-text",`achievements will unlock with progress to avoid spoiler.`],'blank','achievements'],},
-    'miscellaneous':{content:[["display-text",`Stats:`],'blank',['microtabs','Stat',{'border-style':'none','border-bottom-style':'solid'}],'blank',["display-text",`Suggests:`],'blank',['microtabs','Suggest',{'border-style':'none'}],'blank',["display-image", 'js/images/your guys.png', {maxWidth:'90%',maxHeight:'90%',position:'relative'}],]},},
+    'Miscellaneous':{content:[["display-text",`Stats:`],'blank',['microtabs','Stat',{'border-style':'none','border-bottom-style':'solid'}],'blank',["display-text",`Suggests:`],'blank',['microtabs','Suggest',{'border-style':'none'}],'blank',["display-image", 'js/images/your guys.png', {maxWidth:'90%',maxHeight:'90%',position:'relative'}],]},
+    'A page':{content:[["display-text",`Stats:`]],unlocked(){return tmp.gameEnded}},
+    },
 
     microtabs: {
         'Suggest': {

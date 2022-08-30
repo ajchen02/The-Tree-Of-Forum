@@ -201,11 +201,11 @@ addLayer("a", {
         44: {
             description:'Boost Prestige upgrade 14.',
             cost(){return !getBuyableAmount('f',22).gte(5)?d7:d0},
-            effect: 'yes',
-            tooltip:'Effect: 2.5x it\'s effect, and use best instead of total.',
+            effect: n(4) ,
+            tooltip:`Effect: 4x it\'s effect, and use best instead of total.`,
             canAfford(){return !tmp[this.layer].upgradesLimition.includes(40)},
             unlocked(){return player[this.layer].total.gte(20)&&getBuyableAmount('f',22).gte(2)},
-            effectDisplay() { return "2.5x" },
+            effectDisplay() {return format(upgradeEffect(this.layer, this.id))+"x" },
         },
     },
     clickables:{
@@ -215,10 +215,10 @@ addLayer("a", {
             onClick(){
                 doReset('a')
                 doReset('a',true)
-                layerDataReset(this.layer,['unlocked','points','total'])
                 let upgrades=player[this.layer].upgrades
+                layerDataReset(this.layer,['unlocked','points','total'])
                 layers[this.layer].keepingUpgrades()
-                if (player[this.layer].upgrades==upgrades) {giveAchievements('ach',23)}
+                if (!hasAchievement('ach',23)&&upgrades.toString()==player[this.layer].upgrades.toString()) {giveAchievements('ach',23)}
                 layers[this.layer].pointRefresh()
             },
             style: {

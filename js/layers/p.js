@@ -84,10 +84,10 @@ addLayer("p", {
             description:'Multiplies point gain by last prestige gain.',
             cost: d10,
             baseEffect(){
-                return !hasUpgrade('a',44)?player[this.layer].last.max(1).log10().mul(2).add(1):player[this.layer].bestOneTime.max(1).log10().add(1)
+                return hasUpgrade('a',44)?player[this.layer].last.max(1).log10().mul(upgradeEffect('a', 44)).add(1):player[this.layer].bestOneTime.max(1).log10().add(1)
             },
             effect() {return hasUpgrade('p',21)?tmp[this.layer].upgrades[this.id].baseEffect.mul(upgradeEffect('p',21)):tmp[this.layer].upgrades[this.id].baseEffect},
-            tooltip(){return !hasUpgrade('a',44)?`Last: ${format(player[this.layer].last,player[this.layer].last.gte(1e9)?2:0)}<br>Formula: Log10(x)+1`:`Best: ${format(player[this.layer].bestOneTime),player[this.layer].bestOneTime.gte(1e9)?2:0}<br>Formula: (Log10(x)+1)*2`},
+            tooltip(){return !hasUpgrade('a',44)?`Last: ${format(player[this.layer].last)}<br>Formula: Log10(x)+1`:`Best: ${format(player[this.layer].bestOneTime)}<br>Formula: (Log10(x)+1)*2`},
             //effectDisplay() { return format(tmp[this.layer].upgrades[this.id].baseEffect)+"x" },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         },
