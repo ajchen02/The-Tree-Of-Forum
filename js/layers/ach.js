@@ -135,7 +135,7 @@ addLayer("ach", {
     tabFormat:{
     'Achievements':{content:[["display-text",`achievements will unlock with progress to avoid spoiler.`],'blank','achievements'],},
     'Miscellaneous':{content:[["display-text",`Stats:`],'blank',['microtabs','Stat',{'border-style':'none','border-bottom-style':'solid'}],'blank',["display-text",`Suggests:`],'blank',['microtabs','Suggest',{'border-style':'none'}],'blank',["display-image", 'js/images/your guys.png', {maxWidth:'90%',maxHeight:'90%',position:'relative'}],]},
-    'A page':{content:[["display-text",`Stats:`]],unlocked(){return tmp.gameEnded}},
+    'A page':{content:[["display-text",`There is a letter for thank you for playing, but I got no time to write it :(`]],unlocked(){return tmp.gameEnded}},
     },
 
     microtabs: {
