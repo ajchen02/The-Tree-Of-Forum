@@ -219,6 +219,7 @@ addLayer("a", {
                 layerDataReset(this.layer,['unlocked','points','total'])
                 layers[this.layer].keepingUpgrades()
                 if (!hasAchievement('ach',23)&&upgrades.toString()==player[this.layer].upgrades.toString()) {giveAchievements('ach',23)}
+                doReset('a',true)
                 layers[this.layer].pointRefresh()
             },
             style: {
